@@ -22,19 +22,27 @@
 \pagenumbering{arabic}
 \clearpage
 
-\section*{Onderdeel 1}
+\section*{Statemachine}
+Statemachine die de vershillende states laat zien waar de xMega in komt vanaf het opstarten.
 
-Bij de eerste plot komt de volgende waarschuwing:\par 
-\textcolor{red}{\texttt{Warning message:\\ Removed 771 rows containing non-finite values (stat\_boxplot).}}\par
-Zoals er in de warning staat heeft R 771 waardes verwijderd, omdat ze "niet-eindig" zijn. Het gaat hier om de "NA" waardes uit \texttt{hfl} van de dataset \texttt{k.rat.df}. \par 
+\begin{figure}[h]
+	\includegraphics[width=.8\textwidth, keepaspectratio]{media/Pstate.pdf}
+    \caption{}
+\end{figure}
 
-%\begin{figure}[h]
-%	\includegraphics[width=\columnwidth]{finalplot1.pdf}
-%    \caption{Uiteindelijke afbeelding van onderdeel 1. Hierin is de verdeling te zien van %achtervoetlengtes onder de kangoeroerat-populatie uit de dataset \texttt{k.rat.df}. }
-%\end{figure}
-
-\clearpage
-\footnotetext{Data in de schets is fictief en komt niet overeen met de die uit de dataset \texttt{k.rat.df}} 
-evuld ("1")). 
+\section*{Flowchart}
+TBA
+\section*{Message Types}
+\begin{table}[h]
+\begin{tabular}{|l|l|l|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+Mask & Discription           & Pipe \\ \hline
+0x1  & ID Broadcast          & 0    \\ \hline
+0x2  & Routine Routing Table & 1    \\ \hline
+0x3  & Receive Port Data     & 1    \\ \hline
+0x4  & Broadcast Reply       & 1    \\ \hline
+\end{tabular}
+\end{table}
 
 \end{document}
