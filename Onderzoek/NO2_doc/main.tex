@@ -1,0 +1,123 @@
+\documentclass[a4paper, 11pt]{article} % Font size (can be 10pt, 11pt or 12pt) and paper size (remove a4paper for US letter paper)
+
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage{graphicx} % Required for including pictures
+\usepackage{wrapfig} % Allows in-line images
+
+\usepackage{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Required for accented characters
+%\usepackage[backend=bibtex,style=verbose-trad2]{biblatex}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[utf8]{inputenc}
+\usepackage{subcaption}
+\usepackage[font=small]{caption}
+\usepackage{units}
+
+\linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
+
+\makeatletter
+\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
+\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
+
+\renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
+\begin{flushright} % Right align
+{\LARGE\@title} % Increase the font size of the title
+
+\vspace{50pt} % Some vertical space between the title and author name
+
+{\large\@author} % Author name
+\\\@date % Date
+
+\vspace{40pt} % Some vertical space between the author block and abstract
+\end{flushright}
+}
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+\title{\textbf{NO2 meten}\\ % Title
+Vooronderzoek NO2} % Subtitle
+
+\author{\textsc{F. van Beusekom, M. Felida, S. Bottenburg, J. Grobben, R. Bolding} % Author
+\\{\textit{Amsterdam University of Applied Sciences\\ 
+HvA}}} % Institution
+
+%----------------------------------------------------------------------------------------
+\bibliographystyle{IEEEtran}
+\begin{document}
+\captionsetup[figure]{labelfont={bf},name={Fig},labelsep=period}
+\captionsetup{justification=centering}
+\hypersetup{hidelinks=true}
+\maketitle % Print the title section
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT AND KEYWORDS
+%----------------------------------------------------------------------------------------
+
+%\renewcommand{\abstractname}{Summary} % Uncomment to change the name of the abstract to something else
+
+
+\vspace{10pt} % Some vertical space between the abstract and first section
+
+%----------------------------------------------------------------------------------------
+%	ESSAY BODY
+%----------------------------------------------------------------------------------------
+\newpage
+\section{Stikstofdioxide}
+
+Stikstofoxides zijn verbindingen tussen stikstof en zuurstof in de vormen NO en NO2. Stikstofdioxide (NO2) komt vrij bij de verbranding van fossielen brandstoffen. In Nederland zijn de grootste uitstoters van NOx zijn het verkeer en elektriciteitscentrales. NO2 word dan ook vaak gebruikt als indicator van de luchtkwaliteit. De uitstoot van NO2 heeft gevolgen voor de natuur en de gezondheid. 
+
+
+\section{Effecten van NOx}
+
+Stikstofoxide levert een bijdrage aan de vorming van zure regen. Blootstelling aan NO2 hangt samen met luchtwegklachten zoals verminderende longfunctie, astma-aanvallen en infecties. NO daarin tegen heeft weinig gezondheidseffecten. 
+
+
+\subsection{Normen}
+
+De norm voor het jaargemiddelde NO2 is 40 $\mu$g/m3. Deze norm word lokaal enkele keren per jaar overschreden. Omdat het verkeer veel NO2 uitstoot, geld een maximaal toegestaan uurgemiddelde van 200  $\mu$g/m3 voor wegen waar meer dan 40.000 motorvoertuigen per etmaal gebruik van maken.
+
+\begin{center}
+	\begin{tabular}{ | m{5cm} | m{5cm}| } 
+		\hline
+		Soort norm & Concentratie \\
+		\hline
+		Jaargmiddelde & 40ug/m3
+		\\ 
+		\hline
+		Uurgemiddelde & 200ug/m3* 
+		\\ 
+		\hline
+	\end{tabular}
+\end{center}
+
+* Van toepassing voor wegen waarvan ten minste 40.000 motorvoertuigen per etmaal gebruik maken.
+
+
+De gemiddelde concentratie NO2 in de Amsterdamse buitenlucht zit rond de 25 $\mu$g/m3 (13 ppb). De concentraties binnen liggen meestal een factor 2 lager dan buiten. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.9\linewidth]{amsterdam.png}
+    \caption{Meetwaardes NO2 Kantershof Amsterdam zuidoost. 6 tot 11 september 2019.}
+    \label{fig:grafiek}
+\end{figure}
+
+\subsection{Sensoren}
+
+Om de voorkomende levels te kunnen meten moet de gekozen sensor een meetbereik hebben tussen de 0 en de 40 ppb, met een resolutie van 1 ppb. 
+
+De NO2-B43F NO2 sensor is een chemoresistive sensor van Alphasense en lijkt de beste optie maar is niet geschikt.
+
+Deze sensor een meetbereik van 0 tot 20 ppm met 15 ppb ruis. Deze sensor is niet gevoelig genoeg om de lage concentraties met een resolutie van 1 ppb uit de lucht goed te kunnen meten. 
+Sensoren die NO2 meten hebben een kruisgevoeligheid voor andere gassen zoals O3 en zijn erg gevoelig voor veranderingen in temperatuur en luchtvochtigheid. 
+De sensor moet energie zuinig zijn waardoor chemoresistive sensoren niet geschikt zijn omdat deze een continu verbruik is van rond 50 mW. 
+
+\subsection{Conclusie}
+Er is geen sensor op de markt beschikbaar om de concentraties NO2 die we verwachten te meten. De beschikbare sensoren zijn niet gevoelig genoeg en verbruiken te veel energie. Daarom is er voor gekozen om af te stappen van NO2 en de concentraties CO te gaan meten. CO is een giftig gas en kan vrijkomen bij onvolledige verbrandingen en is daarom belangrijk om dit gas tijdig te registreren. 
+
+\end{document}
