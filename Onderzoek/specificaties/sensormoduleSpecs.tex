@@ -65,7 +65,8 @@ Implementaties van koolstofmonoxide sensoren} % Subtitle
 
 \author{\textsc{F. van Beusekom, M. Felida, S. van Bottenburg, J. Grobben, R. Bolding} % Author
 \\{\textit{Amsterdam University of Applied Sciences\\ 
-HvA}}} % Institution
+HvA\\
+Sensor Netwerken: groep 5}}} % Institution
 
 \date{20 September, 2019} % Date
 
@@ -90,30 +91,64 @@ HvA}}} % Institution
 %	ESSAY BODY
 %----------------------------------------------------------------------------------------
 \newpage
-\section{Onderbouwing}
-\subsection{Meting}
-Om de specificaties te bepalen voor de koolmonoxide-meter is er gekeken naar de wettelijke grenswaarden die zijn gegeven in de Arbeidsomstandigheden regeling. Deze zijn $23\,\nicefrac{mg}{m^{3}}$ niet langer dan 8 uur, en $115\,\nicefrac{mg}{m^{3}}$ niet langer dan één kwartier. Omgerekend (en naar beneden afgerond) is dit $18\,ppm$ en $93\,ppm$ respectievelijk. Deze waarden zullen worden genomen als het minimale meetbereik. Om te detecteren of de waarde van $93\,ppm$ langer dan een kwartier wordt overschreven, is een responstijd van één kwartier het absolute maximum. Na het bekijken van meerdere datasheets lijkt een resolutie van minimaal $5\,ppm$ erg goed te realiseerbaar te zijn en dus het streven is hier onder te gaan zitten.
-\subsection{Voeding}
-De voeding kan op dit moment niet heel veel over worden gezegd, gezien er nog niet bekend is wat voor een batterij er beschikbaar wordt gesteld. Voor het nominale vermogen wordt $1\,mW$ als bovengrens genomen, dit is een getal dat werd genoemd tijdens een gesprek met Marcel van der Horst.
+\section{Inleiding}
+In dit verslag worden de specificaties besproken van de te ontwikkelen sensor modules voor het project "Sensor Netwerken". Bij dit vak is het de bedoeling dat er low-power sensor modules worden ontwikkeld die de luchtkwaliteit in het HvA gebouw van de faculteit techniek meten en als netwerk informatie uitwisselen met elkaar. Binnen groep 5 is er voor gekozen om koolstofmonoxide te meten (hierna naar gerefereerd als CO). Uiteindelijk moet iedereen van deze groep zijn eigen sensor module ontwikkelen. Aangezien het HvA gebouw van de faculteit techniek te vergelijken is met de meeste professionele werkomgeving, wordt er voor dit onderzoek gekeken naar de gebruikelijke CO concentraties in gebouwen en hun uitschieters. Op basis daarvan worden de specificaties opgesteld voor de sensor modules.
 
+\section{Algemene koolstofmonoxide concentraties}
+Het NIVM heeft tussen april 2007 tot en met januari 2008 metingen gedaan in 1028 huishoudens. In 169 van de 1028 huishoudens werden werden er concentraties boven het detectie limiet van 1 \textit{parts per billion} (hierna naar gerefereerd als \textit{ppm}) gevonden. In 8 huishoudens werden er waardes van tussen de 25 en 75 \textit{ppm}, dit waren de meest extreme waardes. in 10 andere huishoudens werden er waardes aangetroffen van tussen de 10 en 25 \textit{ppm} en in de rest van de huishoudens (verreweg de meesten) werden er waardes aangetroffen tussen de 1 en 9 \textit{ppm} [1]. Over een werkdag van 8 uur wordt een tijdgewogen gemiddelde concentratie van 25 \textit{ppm} als grenswaarde aangenomen, over 15 minuten is dit 150 \textit{ppm}. De advies waarden van de Wereldgezondheidsorganisatie (Engels: World Health Organization, WHO) zijn 10 \textit{ppm} als tijdgewogen gemiddelde over 8 uurl en 25 \textit{ppm} over 1 uur [2].
+\subsection{Koolstofmonoxide concentraties in de HvA Leeuwenburg}
+Om meer te weten te komen over de huidige manieren van meten van de koolstofmonoxide concentraties in het gebouw van de HvA faculteit techniek, is er contact gezocht het gebouwbeheer. Uit een klein gesprek is gebleken dat er momenteel alleen in de garage CO meters hangen, die wanneer er een bepaalde grenswaarde wordt overschreden (momenteel nog onbekend voor ons welke grenswaarde dat is) alarm slaan waarna vervolgens iedereen de garage moet verlaten.
+
+\section{Luchtkwaliteit meten}
+Zoals eerder werd besproken worden de te ontwikkelen sensor modules gebruikt om de luchtkwaliteit te meten. Hierbij wordt dus niet alleen bedoeld om een detector te maken die afgaat na het overschrijden van een bepaalde waarde, maar is het een doel om ook te kunnen meten wanneer je welke concentratie CO in de lucht hebt zitten en hoe ver deze concentratie ligt van de grenswaardes. Binnen groep 5 is afgesproken om de aanname te doen dat de minimale grenswaarde in delen van 1/5e gemeten moet kunnen worden. Aangezien onze sensor modules de hele dag door de CO concentraties in het gebouw moeten meten, gaan we uit van de grenswaarden voor een werk dag (8 uur lang). In dit geval komt de minimale grenswaarde voort uit de Wereldgezondheidsorganisatie (Engels: World Health Organization, WHO) en bedraagt deze 10 \textit{ppm} als tijdgewogen gemiddelde over de hele werkdag. Dit betekend dat wij de CO concentraties willen met een gevoeligheid van 2 \textit{ppm}. Het detectie limiet moet ook 1/5e zijn van de minimale grenswaarde. Dit bedraagt 2 \textit{ppm}.
+
+\section{Specificaties}
 \begin{center}
 	\begin{tabular}{ | m{5cm} | m{5cm}| } 
 		\hline
 		\multicolumn{2}{|c|}{Specificaties voor de implementaties van CO sensoren} \\
 		\hline
-		Meet bereik a: & <18 - >93 ppm \\
+		Meet bereik a: & 0 - 1000 \textit{ppm} \\
 		\hline
-		Detectie limiet:  & <18 ppm
+		detectie limiet:  & 1 \textit{ppm}
 		\\ 
 		\hline
-		Resolutie: & <5 ppm 
+		detectie resolutie: & 1 \textit{ppm} 
 		\\ 
 		\hline
-		Responstijd: & <15 minuten
+		response tijd: & < 1 minuut
+		\\ 
+		\hline
+		Voed spanning: & min: 2,7V max: 3,3V
+		\\ 
+		\hline
+		Maximaal vermogen: & 1 mW
+		\\
+		\hline
+		Output gevoeligheid: & 1mV/\textit{ppm}
 		\\
 		\hline
 	\end{tabular}
 \end{center}
 %----------------------------------------------------------------------------------------
+\newpage
+\begin{thebibliography}{9}
+	\bibitem{NIVM huurwoningen}
+	M. van Bruggen, J.T.M. Gram, E.L. Boels, L. Ruhaak, M. Mooij,
+	NIVM,
+	2009 [Bekeken in september 2019],
+	[Rapport],
+	"Koolmonoxide in huurwoningen in de Randstad",
+	Beschikbaar: \url{https://www.rivm.nl/bibliotheek/rapporten/609300009.pdf}
+	
+	\bibitem{Blootstelling aan CO}
+	M. Mooij,
+	NIVM,
+	2008 [Bekeken in september 2019],
+	[Rapport],
+	"Chronische blootstelling aan koolmonoxide, tabel 2.2",
+	Beschikbaar: \url{https://www.rivm.nl/bibliotheek/rapporten/609300005.pdf}
+	
+\end{thebibliography}
 
 \end{document}
