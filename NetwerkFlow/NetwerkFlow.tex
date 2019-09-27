@@ -1,9 +1,9 @@
-\documentclass{article}
+\documentclass[a4paper, 11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{fancyvrb} 
 \usepackage{siunitx}
-\usepackage[table,xcdraw, svgnames]{xcolor}
+\usepackage[table, xcdraw, svgnames]{xcolor}
 \usepackage{listings, lstautogobble}
 \usepackage{subfig}
 
@@ -15,6 +15,7 @@
 \author{Groep 5}
 \date{September 2018}
 \pagenumbering{gobble}
+
 \begin{document}
 
 \maketitle
@@ -22,15 +23,17 @@
 \pagenumbering{arabic}
 \clearpage
 
-\section*{Statemachine}
-Statemachine die de verschillende states laat zien waar de Xmega in komt vanaf het opstarten.
-\begin{figure}[h]
-	\includegraphics[width=.8\textwidth, keepaspectratio]{media/Pstate.pdf}
-    \caption{}
-\end{figure}
-\newpage
+\section{Inleiding}
+Dit document beschrijft de software implementaties van groep 5 voor het vak sensornetwerken. Het doel van de opdracht is om een dynamisch netwerk van sensornodes te maken, waarbij in dit document de nadruk licht op de algemene netwerkstructuur en de implementatie in MCU van de sensornodes. Waarbij het vooral zal gaan om het stuk software dat gelijk is voor alle sensornodes. Tijdens de ontwikkeling van de individuele sensorimplementaties (vak Sensormodules) kan de code afhankelijk per node worden aangepast. 
 
-\section*{Message Types}
+
+\section{ISO groep}
+Om te zorgen dat de nodes van de verschillende groepen elkaars datapaketten kunnen interpreteren en doorsturen zijn er afspraken gemaakt tussen de 5 groepen. Elke groep leverde 1 afgevaardigde, de 5 afgevaardigden vormden de ISO groep. De afspraken die de ISO-groep gemaakt heeft zijn opgesteld in\cite{ISOpoot}. 
+
+Naast afspraken over de algemene NRF-instellingen zijn er ook afspraken gemaakt over de berichttypes en de bijbehorende headers.
+
+Bericht headers staan in de onderstaande tabel.
+\subsection*{Message Types}
 \begin{table}[h]
 \begin{tabular}{|l|l|l|}
 \hline
@@ -43,10 +46,28 @@ Mask & Description           & Pipe \\ \hline
 \end{tabular}
 \end{table}
 
-\section*{Flowchart}
-\begin{figure}[h]
+\section{Algemene Node Programma}
+Zoals besproken in de inleiding van dit document het grootste deel van de programma code voor de node MCU's gelijk. In dit hoofdstuk wordt deze code besproken. 
+\subsection{Flowchart}
+Om de algemene node-code inzichtelijk te maken is gebruik gemaakt van ene flowchart. In Figuur~\ref{fig:flowchart} is deze flowchart te zien.
+\begin{figure}[!h]
+	\centering	
 	\includegraphics[width=.5\textwidth, keepaspectratio]{media/Pflow.pdf}
-    \caption{}
+    \caption{Nadat de node opgestart wordt (Boot) de MCU geïnitialiseerd in het blok [Initialize] *****WIP**** }
+    \label{fig:flowchart}
 \end{figure}
+
+\subsection{Statemachine}
+Omdat MCU veel aan het wachten is op berichten om deze vervolgens te verwerken is gekozen als implementatie een statemachine te gebruiken. Deze is afgebeeld in Figuur~\ref{fig:Statemachine} 
+Statemachine die de verschillende states laat zien waar de Xmega in komt vanaf het opstarten.
+\begin{figure}[!h]
+	\includegraphics[width=.8\textwidth, keepaspectratio]{media/Pstate.pdf}
+    \caption{}
+    \label{fig:Statemachine}
+\end{figure}
+\newpage
+\bibliographystyle{ieeetr}
+
+\bibliography{Bronnen} 
 
 \end{document}
