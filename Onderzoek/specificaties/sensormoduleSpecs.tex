@@ -148,7 +148,7 @@ Zoals eerder werd besproken worden de te ontwikkelen sensor modules gebruikt om 
 Stikstofoxides zijn verbindingen tussen stikstof en zuurstof in de vormen $NO$ en $NO_2$. Stikstofdioxide ($NO_2$) komt vrij bij de verbranding van fossielen brandstoffen. In Nederland zijn de grootste uitstoters van $NO_x$ het verkeer en de elektriciteitscentrales.  De uitstoot van $NO_2$ heeft gevolgen voor de natuur en de gezondheid. $NO_2$ word dan ook vaak gebruikt als indicator van de luchtkwaliteit.
 
 \subsection{Effecten van NOx}
-Stikstofoxide levert een bijdrage aan de vorming van zure regen. Blootstelling aan $NO_2$ hangt samen met luchtwegklachten zoals verminderende longfunctie, astma-aanvallen en infecties. $NO$ daarin tegen heeft weinig gezondheidseffecten. 
+Stikstofoxide levert een bijdrage aan de vorming van zure regen. Blootstelling aan $NO_2$ hangt samen met luchtwegklachten zoals verminderende longfunctie, astma-aanvallen en infecties. $NO$ daarin tegen heeft weinig gezondheidseffecten \cite{NO2_Amsterdam}. 
 
 
 \subsubsection{Normen}
@@ -176,19 +176,18 @@ De gemiddelde concentratie $NO_2$ in de Amsterdamse buitenlucht ligt rond de $25
 
 \begin{figure}
 	\centering
-	\includegraphics[width=.9\linewidth]{../NO2_doc/amsterdam.png}
-	\caption{Meetwaardes $NO_2$ Kantershof Amsterdam zuidoost. 6 tot 11 september 2019.}
+	\includegraphics[width=.9\linewidth]{../Old/NO2_doc/amsterdam.png}
+	\caption{Meetwaardes $NO_2$ Kantershof Amsterdam zuidoost. 6 tot 11 september 2019 \cite{grafiek}}
 	\label{fig:grafiek}
 \end{figure}
 
+\newpage
 \subsubsection{Sensoren}
-Om de voorkomende niveau's te kunnen meten moet de gekozen sensor een meetbereik hebben tussen de 0 en de 40 ppb, met een resolutie van 1 ppb. 
-
-De NO2-B43F $NO_2$ sensor is een chemoresistive sensor van Alphasense en lijkt de beste optie maar is niet geschikt.
-
-Deze sensor een meetbereik van 0 tot 20 ppm met een meetonzekerheid van 15 ppb. Deze sensor is niet gevoelig genoeg om de lage concentraties met een resolutie van 1 ppb uit de lucht goed te kunnen meten. 
-Sensoren die $NO_2$ meten hebben een kruisgevoeligheid voor andere gassen zoals $O_3$ en zijn erg gevoelig voor veranderingen in temperatuur en luchtvochtigheid. 
-De sensor moet energie zuinig zijn waardoor chemoresistive sensoren niet geschikt zijn omdat deze een continu verbruik is in de ordegrootte van 50 mW. 
+Om de voorkomende niveau's te kunnen meten moet de gekozen sensor een meetbereik hebben tussen de 0 en de 40 ppb, met een resolutie van 1 ppb.\\
+De NO2-B43F $NO_2$ sensor is een chemoresistive sensor van Alphasense en lijkt de beste optie maar is niet geschikt.\\
+Deze sensor een meetbereik van 0 tot 20 ppm met een meetonzekerheid van 15 ppb. Deze sensor is niet gevoelig genoeg om de lage concentraties met een resolutie van 1 ppb uit de lucht goed te kunnen meten.\\ 
+Sensoren die $NO_2$ meten hebben een kruisgevoeligheid voor andere gassen zoals $O_3$ en zijn erg gevoelig voor veranderingen in temperatuur en luchtvochtigheid. \\
+De sensor moet energie zuinig zijn waardoor chemoresistive sensoren niet geschikt zijn omdat deze een continu verbruik is in de ordegrootte van 50 mW \cite{B4DF}. 
 
 \subsubsection{Conclusie}
 Er is geen sensor op de markt beschikbaar om de concentraties $NO_2$ die we verwachten te meten. De beschikbare sensoren zijn niet gevoelig genoeg en verbruiken te veel energie. Daarom is er voor gekozen om af te stappen van het meten van $NO_2$ als indicator van de luchtkwaliteit binnen de HvA gebouwen. Als alternatief is gekozen voor het meten van $CO$ concentraties in de lucht. $CO$ is een giftig gas en kan vrijkomen bij onvolledige verbrandingen en is daarom belangrijk om dit gas tijdig te registreren.
@@ -218,6 +217,26 @@ Er is geen sensor op de markt beschikbaar om de concentraties $NO_2$ die we verw
 	"Chronische blootstelling aan koolmonoxide, tabel 2.2",
 	Beschikbaar: \url{https://www.rivm.nl/bibliotheek/rapporten/609300005.pdf}
 	
+	\bibitem{NO2_Amsterdam}
+	RIVM, J.p. Wesseling, S. van der Zee, P.L. Nguyen,
+	2008 [Bekeken in september 2019],
+	[Rapport],
+	"Gemeten en berekende NO2-concentraties in Amsterdam in 2008",
+	Beschikbaar: \url{https://www.rivm.nl/bibliotheek/rapporten/680705015.pdf}
+	
+	\bibitem{grafiek}
+	Rijksinstituut voor Volksgezondheid
+	2019[Bekeken in september 2019],
+	[Online],
+	"Meetgegevens NO2",
+	Beschikbaar: \url{https://www.luchtmeetnet.nl}
+	
+	\bibitem{B4DF}
+	Alphasense
+	2018[Bekeken in september 2019],
+	[Datasheet],
+	"Datasheet",
+	Beschikbaar: \url{http://www.alphasense.com/WEB1213/wp-content/uploads/2018/12/NO2B43F.pdf}
 \end{thebibliography}
 
 \end{document}
