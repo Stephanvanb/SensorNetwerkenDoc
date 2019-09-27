@@ -92,10 +92,10 @@ Sensor Netwerken: groep 5}}} % Institution
 %-----------------------------------------------
 \newpage
 \section{Inleiding}
-In dit verslag worden de specificaties besproken van de te ontwikkelen sensor modules voor het project "Sensor Netwerken". Bij dit vak is het de bedoeling dat er low-power sensor modules worden ontwikkeld die de luchtkwaliteit in het HvA gebouw van de faculteit techniek meten en als netwerk informatie uitwisselen met elkaar. Binnen groep 5 is er voor gekozen om koolstofmonoxide te meten (hierna naar gerefereerd als CO), de onderbouwing voor deze keuze staat beschreven in appendix A. Uiteindelijk moet iedereen van deze groep zijn eigen sensor module ontwikkelen. Aangezien het HvA gebouw van de faculteit techniek te vergelijken is met de meeste professionele werkomgeving, wordt er voor dit onderzoek gekeken naar de gebruikelijke CO concentraties in gebouwen en hun uitschieters. Op basis daarvan worden de specificaties opgesteld voor de sensor modules.
+In dit verslag worden de specificaties besproken van de te ontwikkelen sensor modules voor het project "Sensor Netwerken". Bij dit vak is het de bedoeling dat er low-power sensor modules worden ontwikkeld die de luchtkwaliteit in het HvA gebouw van de faculteit techniek meten en als netwerk informatie uitwisselen met elkaar. Binnen groep 5 is er voor gekozen om koolstofmonoxide te meten (hierna naar gerefereerd als CO). In eerste instantie was er gekozen om stikstofdioxide te meten, de onderbouwing voor de keuze om over te stappen staat beschreven in appendix A. Uiteindelijk moet iedereen van deze groep zijn eigen sensor module ontwikkelen. Aangezien het HvA gebouw van de faculteit techniek te vergelijken is met de meeste professionele werkomgeving, wordt er voor dit onderzoek gekeken naar de gebruikelijke CO concentraties in gebouwen en hun uitschieters. Op basis daarvan worden de specificaties opgesteld voor de sensor modules.
 
 \section{Koolstofmonoxide}
-Koolstofmonoxide (CO) is een verbinding tussen koolstof en zuurstof. Het is een kleur en geurloos gas. CO komt vrij bij een onvolledige verbranding. Dit kan erg gevaarlijk zijn voor de gezondheid omdat het gas je ongemerkt vergiftigt. Het word dan ook wel eens een "sluipmoordenaar" genoemd. 
+Koolstofmonoxide (CO) is een verbinding tussen koolstof en zuurstof. Het is een kleur- en geurloos gas. CO komt vrij bij een onvolledige verbranding. Dit kan erg gevaarlijk zijn voor de gezondheid omdat het gas je ongemerkt vergiftigt. Het word dan ook wel eens een "sluipmoordenaar" genoemd. 
 
 \subsection{Ontstaan van CO}
 Bij de verbranding van koolstofverbindingen ontstaat er normaal CO2. Als de verbranding onvolledig is, door bijvoorbeeld een tekort aan zuurstof, ontstaat er CO. Een veel voorkomende oorzaak van CO productie zijn niet goed afgestelde of niet goed onderhouden gas kachels en cv-ketels.
@@ -106,12 +106,12 @@ CO is erg gevaarlijk voor de mens omdat het geur en kleurloos is. Bij inademing 
 De effecten van blootstelling aan CO zijn het gevolg van een zuurstoftekort in het bloed. Hoe meer CO er word opgenomen hoe minder zuurstof er kan worden opgenomen. 
 
 \section{Algemene koolstofmonoxide concentraties}
-Het NIVM heeft tussen april 2007 tot en met januari 2008 metingen gedaan in 1028 huishoudens. In 169 van de 1028 huishoudens werden werden er concentraties boven het detectie limiet van 1 \textit{parts per billion} (hierna naar gerefereerd als \textit{ppm}) gevonden. In 8 huishoudens werden er waardes van tussen de 25 en 75 \textit{ppm}, dit waren de meest extreme waardes. in 10 andere huishoudens werden er waardes aangetroffen van tussen de 10 en 25 \textit{ppm} en in de rest van de huishoudens (verreweg de meesten) werden er waardes aangetroffen tussen de 1 en 9 \textit{ppm} \cite{NIVM huurwoningen}. Over een werkdag van 8 uur wordt een tijdgewogen gemiddelde concentratie van 25 \textit{ppm} als grenswaarde aangenomen, over 15 minuten is dit 150 \textit{ppm}. De advies waarden van de Wereldgezondheidsorganisatie (Engels: World Health Organization, WHO) zijn 10 \textit{ppm} als tijdgewogen gemiddelde over 8 uurl en 25 \textit{ppm} over 1 uur \cite{Blootstelling aan CO}.
+Het RIVM heeft tussen april 2007 tot en met januari 2008 metingen gedaan in 1028 huishoudens. In 169 van de 1028 huishoudens werden werden er concentraties boven het detectie limiet van 1 \textit{parts per billion} (hierna naar gerefereerd als \textit{ppm}) gevonden. In 8 huishoudens werden er waardes van tussen de 25 en 75 \textit{ppm}, dit waren de meest extreme waardes. in 10 andere huishoudens werden er waardes aangetroffen van tussen de 10 en 25 \textit{ppm} en in de rest van de huishoudens (verreweg de meesten) werden er waardes aangetroffen tussen de 1 en 9 \textit{ppm} \cite{RIVM huurwoningen}. Over een werkdag van 8 uur wordt een tijdgewogen gemiddelde concentratie van 25 \textit{ppm} als grenswaarde aangenomen, over 15 minuten is dit 150 \textit{ppm}. De advies waarden van de Wereldgezondheidsorganisatie (Engels: World Health Organization, WHO) zijn 10 \textit{ppm} als tijdgewogen gemiddelde over 8 uurl en 25 \textit{ppm} over 1 uur \cite{Blootstelling aan CO}.
 \subsection{Koolstofmonoxide concentraties in de HvA Leeuwenburg}
 Om meer te weten te komen over de huidige manieren van meten van de koolstofmonoxide concentraties in het gebouw van de HvA faculteit techniek, is er contact gezocht het gebouwbeheer. Uit een klein gesprek is gebleken dat er momenteel alleen in de garage CO meters hangen, die wanneer er een bepaalde grenswaarde wordt overschreden (momenteel nog onbekend voor ons welke grenswaarde dat is) alarm slaan waarna vervolgens iedereen de garage moet verlaten.
 
 \section{Luchtkwaliteit meten}
-Zoals eerder werd besproken worden de te ontwikkelen sensor modules gebruikt om de luchtkwaliteit te meten. Hierbij wordt dus niet alleen bedoeld om een detector te maken die afgaat na het overschrijden van een bepaalde waarde, maar is het een doel om ook te kunnen meten wanneer je welke concentratie CO in de lucht hebt zitten en hoe ver deze concentratie ligt van de grenswaardes. Binnen groep 5 is afgesproken om de aanname te doen dat de minimale grenswaarde in delen van 1/5e gemeten moet kunnen worden. Aangezien onze sensor modules de hele dag door de CO concentraties in het gebouw moeten meten, gaan we uit van de grenswaarden voor een werk dag (8 uur lang). In dit geval komt de minimale grenswaarde voort uit de Wereldgezondheidsorganisatie (Engels: World Health Organization, WHO) en bedraagt deze 10 \textit{ppm} als tijdgewogen gemiddelde over de hele werkdag. Dit betekend dat wij de CO concentraties willen met een gevoeligheid van 2 \textit{ppm}. Het detectie limiet moet ook 1/5e zijn van de minimale grenswaarde. Dit bedraagt 2 \textit{ppm}.
+Zoals eerder werd besproken worden de te ontwikkelen sensor modules gebruikt om de luchtkwaliteit te meten. Hierbij wordt dus niet alleen bedoeld om een detector te maken die afgaat na het overschrijden van een bepaalde waarde, maar is het een doel om ook te kunnen meten wanneer je welke concentratie CO in de lucht hebt zitten en hoe ver deze concentratie ligt van de grenswaardes. Binnen groep 5 is afgesproken om de aanname te doen dat de minimale grenswaarde in delen van 1/5e gemeten moet kunnen worden. Aangezien onze sensor modules de hele dag door de CO concentraties in het gebouw moeten meten, gaan we uit van de grenswaarden voor een werk dag (8 uur lang). In dit geval komt de minimale grenswaarde voort uit de Wereldgezondheidsorganisatie (Engels: World Health Organization, WHO) en bedraagt deze 10 \textit{ppm} als tijdgewogen gemiddelde over de hele werkdag. Dit betekend dat wij de CO concentraties willen met een gevoeligheid van 2 \textit{ppm}. Het detectie limiet moet ook 1/5e zijn van de minimale grenswaarde. Dit bedraagt 2 \textit{ppm}. Aangezien CO een gas is, zullen te ontwikkelen sensor modules elektro-chemische sensoren bevatten. Elektro-chemische sensoren hebben in veel van de gevallen een response tijd, deze mag maximaal je sample tijd bedragen. Zoals hier boven staat beschreven worden de grenswaarden bepaald als een tijdgewogen gemiddelde concentratie en is het een streven om de grenswaarden op een nauwkeurigheid van 1/5e delen te kunnen meten. de minimale blootstellingsduur die wordt omschreven door het RIVM is 15 \cite{Blootstelling aan CO}. Dit betekend dat er dus elke 3 minuten een sample moet worden genomen en dus mag de response tijd van de sensor maximaal 3 minuten zijn. Bij het ontwikkelen van deze sensor modules wordt er gewerkt met het HvA-Xmega-Board. Deze heeft een spanningsregulator die een stabiele spanning van 3,3 V afgeeft \cite{xmega}, Daarom is het wenselijk als de sensor module een voedspanning heeft van zo'n 2,7 V tot 3,3 V.
 
 \section{Specificaties}
 \begin{center}
@@ -121,13 +121,13 @@ Zoals eerder werd besproken worden de te ontwikkelen sensor modules gebruikt om 
 		\hline
 		Meet bereik a: & 0 - 1000 \textit{ppm} \\
 		\hline
-		detectie limiet:  & 1 \textit{ppm}
+		detectie limiet:  & <2 \textit{ppm}
 		\\ 
 		\hline
-		detectie resolutie: & 1 \textit{ppm} 
+		detectie resolutie: & 2 \textit{ppm} 
 		\\ 
 		\hline
-		response tijd: & < 1 minuut
+		response tijd: & < 3 minuut
 		\\ 
 		\hline
 		Voed spanning: & min: 2,7V max: 3,3V
@@ -201,9 +201,9 @@ Er is geen sensor op de markt beschikbaar om de concentraties $NO_2$ die we verw
 	"Koolmonoxide",
 	Beschikbaar: \url{https://www.leefmilieu.nl/sites/www3.leefmilieu.nl/files/imported/pdf_s/MGM_2008-02_koolmonoxide.pdf}
 	
-	\bibitem{NIVM huurwoningen}
+	\bibitem{RIVM huurwoningen}
 	M. van Bruggen, J.T.M. Gram, E.L. Boels, L. Ruhaak, M. Mooij,
-	NIVM,
+	RIVM,
 	2009 [Bekeken in september 2019],
 	[Rapport],
 	"Koolmonoxide in huurwoningen in de Randstad",
@@ -211,7 +211,7 @@ Er is geen sensor op de markt beschikbaar om de concentraties $NO_2$ die we verw
 	
 	\bibitem{Blootstelling aan CO}
 	M. Mooij,
-	NIVM,
+	RIVM,
 	2008 [Bekeken in september 2019],
 	[Rapport],
 	"Chronische blootstelling aan koolmonoxide, tabel 2.2",
@@ -237,6 +237,14 @@ Er is geen sensor op de markt beschikbaar om de concentraties $NO_2$ die we verw
 	[Datasheet],
 	"Datasheet",
 	Beschikbaar: \url{http://www.alphasense.com/WEB1213/wp-content/uploads/2018/12/NO2B43F.pdf}
+	
+	\bibitem{xmega}
+	978-90-484-3527-2,
+	W. Dolman,
+	2016[Bekeken in september 2019],
+	[boek],
+	"De taal C en de Xmega (2e druk)",
+	Culemborg,
+	Free Musketeers uitgeverij en productie
 \end{thebibliography}
-
 \end{document}
