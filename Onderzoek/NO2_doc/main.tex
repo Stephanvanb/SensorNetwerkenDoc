@@ -15,6 +15,10 @@
 \usepackage{subcaption}
 \usepackage[font=small]{caption}
 \usepackage{units}
+\usepackage[symbol]{footmisc}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+%https://tex.stackexchange.com/questions/826/symbols-instead-of-numbers-as-footnote-markers
 
 \linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
 
@@ -95,7 +99,9 @@ De norm voor het jaargemiddelde $NO_2$ is 	$40\,\nicefrac{\mu g}{m^{3}}$. Deze n
 	\end{tabular}
 \end{center}
 
+\begin{footnotesize} 
 * Van toepassing voor wegen waarvan ten minste 40.000 motorvoertuigen per etmaal gebruik maken.
+\end{footnotesize}
 
 De gemiddelde concentratie $NO_2$ in de Amsterdamse buitenlucht ligt rond de $25\,\nicefrac{\mu g}{m^{3}}$ (13 ppb). De concentraties binnen liggen meestal een factor 2 lager dan buiten. 
 
@@ -107,6 +113,7 @@ De gemiddelde concentratie $NO_2$ in de Amsterdamse buitenlucht ligt rond de $25
 \end{figure}
 
 \subsection{Sensoren}
+
 
 Om de voorkomende niveau's te kunnen meten moet de gekozen sensor een meetbereik hebben tussen de 0 en de 40 ppb, met een resolutie van 1 ppb. 
 
