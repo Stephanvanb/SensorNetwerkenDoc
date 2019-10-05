@@ -11,7 +11,7 @@
 
 \setlength{\parskip}{0.5em}
 
-\title{Sensornetwerken top view}
+\title{Sensornetwerk Proof of Concept v0.1}
 \author{Groep 5}
 \date{September 2018}
 \pagenumbering{gobble}
@@ -24,11 +24,15 @@
 \clearpage
 
 \section{Inleiding}
-Dit document beschrijft de software implementaties van groep 5 voor het vak sensornetwerken. Het doel van de opdracht is om een dynamisch netwerk van sensornodes te maken, waarbij in dit document de nadruk licht op de algemene netwerkstructuur en de implementatie in MCU van de sensornodes. Waarbij het vooral zal gaan om het stuk software dat gelijk is voor alle sensornodes. Tijdens de ontwikkeling van de individuele sensorimplementaties (vak Sensormodules) kan de code afhankelijk per node worden aangepast. 
+Dit document beschrijft de software implementaties van groep 5 voor het vak "Sensornetwerk Ontwerp" aan de Hogeschool van Amsterdam.
+
+Het doel van de opdracht is om een dynamisch netwerk van sensornodes te maken, waarbij in dit document de nadruk ligt op de algemene netwerkstructuur en de implementatie in MCU van de sensornodes. Hiervoor geldt over het algemeen dat het stuk software wat in dit document beschreven wordt gelijk is voor alle sensornodes. Tijdens de ontwikkeling van de individuele sensorimplementaties (vak "Sensormodule Ontwerp") kan de code afhankelijk per node worden aangepast. 
+
+Het doel van dit document is om een 'proof of concept' te geven van de algemene netwerkstuctuur waar de sensornodes tijdens het vak "Sensormodule Ontwerp" gebruik van zullen maken.
 
 
 \section{ISO groep}
-Om te zorgen dat de nodes van de verschillende groepen elkaars datapaketten kunnen interpreteren en doorsturen zijn er afspraken gemaakt tussen de 5 groepen. Elke groep leverde 1 afgevaardigde, de 5 afgevaardigden vormden de ISO groep. De afspraken die de ISO-groep gemaakt heeft zijn opgesteld in\cite{ISOpoot}. 
+Om te zorgen dat de nodes van de verschillende groepen elkaars datapaketten kunnen interpreteren en doorsturen zijn er afspraken gemaakt tussen de 5 groepen. Elke groep leverde 1 afgevaardigde, de 5 afgevaardigden vormden de ISO groep. De afspraken die de ISO-groep gemaakt heeft zijn opgesteld in\cite{ISO}. 
 
 Naast afspraken over de algemene NRF-instellingen zijn er ook afspraken gemaakt over de berichttypes en de bijbehorende headers.
 
@@ -53,7 +57,8 @@ Om de algemene node-code inzichtelijk te maken is gebruik gemaakt van ene flowch
 \begin{figure}[!h]
 	\centering	
 	\includegraphics[width=.5\textwidth, keepaspectratio]{media/Pflow.pdf}
-    \caption{Nadat de node opgestart wordt (Boot) de MCU geïnitialiseerd in het blok [Initialize] *****WIP**** }
+    \caption{Nadat de node opgestart wordt (Boot) de MCU geïnitialiseerd in het blok [Initialize]
+     \textbf{Figuur dient in deze versie als voorbeeld en zal geupdate worden wanneer het basis ontwerp af is.}}
     \label{fig:flowchart}
 \end{figure}
 
@@ -62,12 +67,12 @@ Omdat MCU veel aan het wachten is op berichten om deze vervolgens te verwerken i
 Statemachine die de verschillende states laat zien waar de Xmega in komt vanaf het opstarten.
 \begin{figure}[!h]
 	\includegraphics[width=.8\textwidth, keepaspectratio]{media/Pstate.pdf}
-    \caption{}
+    \caption{ \textbf{Figuur dient in deze versie als voorbeeld en zal geupdate worden wanneer het basis ontwerp af is.}}
     \label{fig:Statemachine}
 \end{figure}
 \newpage
 \bibliographystyle{ieeetr}
 
-\bibliography{Bronnen} 
+\bibliography{POCbronnen} 
 
 \end{document}
