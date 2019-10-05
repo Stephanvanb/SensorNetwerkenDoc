@@ -1,0 +1,48 @@
+
+\section{Proof of Concept ('Work in Progress')}
+Dit document beschrijft de software implementaties van groep 5 voor het vak "Sensornetwerk Ontwerp" aan de Hogeschool van Amsterdam.
+
+Het doel van de opdracht is om een dynamisch netwerk van sensornodes te maken, waarbij in dit document de nadruk ligt op de algemene netwerkstructuur en de implementatie in MCU van de sensornodes. Hiervoor geldt over het algemeen dat het stuk software wat in dit document beschreven wordt gelijk is voor alle sensornodes. Tijdens de ontwikkeling van de individuele sensorimplementaties (vak "Sensormodule Ontwerp") kan de code afhankelijk per node worden aangepast. 
+
+Het doel van dit document is om een 'proof of concept' te geven van de algemene netwerkstuctuur waar de sensornodes tijdens het vak "Sensormodule Ontwerp" gebruik van zullen maken.
+
+
+\subsection{ISO groep}
+Om te zorgen dat de nodes van de verschillende groepen elkaars datapaketten kunnen interpreteren en doorsturen zijn er afspraken gemaakt tussen de 5 groepen. Elke groep leverde 1 afgevaardigde, de 5 afgevaardigden vormden de ISO groep. De afspraken die de ISO-groep gemaakt heeft zijn opgesteld in\cite{ISO}. 
+
+Naast afspraken over de algemene NRF-instellingen zijn er ook afspraken gemaakt over de berichttypes en de bijbehorende headers.
+
+Bericht headers staan in de onderstaande tabel.
+\subsubsection*{Message Types}
+\begin{table}[h]
+\begin{tabular}{|l|l|l|}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+Mask & Description           & Pipe \\ \hline
+0x1  & ID Broadcast          & 0    \\ \hline
+0x2  & Routine Routing Table & 1    \\ \hline
+0x3  & Receive Port Data     & 1    \\ \hline
+0x4  & Broadcast Reply       & 1    \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Algemene Node Programma}
+Zoals besproken in de inleiding van dit document het grootste deel van de programma code voor de node MCU's gelijk. In dit hoofdstuk wordt deze code besproken. 
+\subsubsection{Flowchart}
+Om de algemene node-code inzichtelijk te maken is gebruik gemaakt van ene flowchart. In Figuur~\ref{fig:flowchart} is deze flowchart te zien.
+\begin{figure}[!h]
+	\centering	
+	\includegraphics[width=.5\textwidth, keepaspectratio]{App2/media/Pflow.pdf}
+    \caption{Nadat de node opgestart wordt (Boot) de MCU geïnitialiseerd in het blok [Initialize]
+     \textbf{Figuur dient in deze versie als voorbeeld en zal geupdate worden wanneer het basis ontwerp af is.}}
+    \label{fig:flowchart}
+\end{figure}
+
+\subsubsection{Statemachine}
+Omdat MCU veel aan het wachten is op berichten om deze vervolgens te verwerken is gekozen als implementatie een statemachine te gebruiken. Deze is afgebeeld in Figuur~\ref{fig:Statemachine} 
+Statemachine die de verschillende states laat zien waar de Xmega in komt vanaf het opstarten.
+\begin{figure}[!h]
+	\includegraphics[width=.8\textwidth, keepaspectratio]{App2/media/Pstate.pdf}
+    \caption{ \textbf{Figuur dient in deze versie als voorbeeld en zal geupdate worden wanneer het basis ontwerp af is.}}
+    \label{fig:Statemachine}
+\end{figure}
