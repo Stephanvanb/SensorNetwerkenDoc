@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.20)  27 SEP 2019 15:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.20)  14 OCT 2019 15:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -807,11 +807,11 @@ Package rerunfilecheck Info: File `sensormoduleSpecs.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 250.
  ) 
 Here is how much of TeX's memory you used:
- 8868 strings out of 494847
- 136824 string characters out of 6179080
+ 8865 strings out of 494847
+ 136797 string characters out of 6179080
  244290 words of memory out of 5000000
  11868 multiletter control sequences out of 15000+600000
- 49667 words of font info for 182 fonts, out of 8000000 for 9000
+ 49508 words of font info for 180 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  42i,14n,42p,2045b,427s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/rowan/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.600
@@ -820,7 +820,7 @@ ve/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/pal
 atino/uplri8a.pfb>
-Output written on sensormoduleSpecs.pdf (7 pages, 115636 bytes).
+Output written on sensormoduleSpecs.pdf (7 pages, 115464 bytes).
 PDF statistics:
  197 PDF objects out of 1000 (max. 8388607)
  135 compressed objects within 2 object streams
