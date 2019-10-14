@@ -1,0 +1,118 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{fancyvrb} 
+\usepackage{siunitx}
+\usepackage[table, xcdraw, svgnames]{xcolor}
+\usepackage{listings, lstautogobble}
+\usepackage{subfig}
+
+
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+
+\renewcommand{\figurename}{Figuur}
+\renewcommand{\lstlistingname}{Code}
+
+\setlength{\parskip}{0.5em}
+
+\title{ISO in \LaTeX}
+\author{Groep 5}
+\date{September 2018}
+\pagenumbering{gobble}
+
+\lstset {
+         language=c++,                  % language code
+         basicstyle=\footnotesize,      % font size
+         numbers=none,                  % where to put line numbers
+         numberstyle=\footnotesize,     % numbers size
+         numbersep=5pt,                 % how far the line numbers are from the code
+         backgroundcolor=\color{white}, % background color
+         showspaces=false,                          % show spaces (with underscores)
+         showstringspaces=false,            % underline spaces within strings
+         showtabs=false,                            % show tabs using underscores
+         frame=single,                  % adds a frame around the code
+         tabsize=4,                     % default tabsize
+         breaklines=true,                  % automatic line breaking
+         columns=fullflexible,
+         breakautoindent=false,
+         framerule=1pt,
+         xleftmargin=0pt,
+         xrightmargin=0pt,
+         breakindent=0pt,
+         resetmargins=true
+    }
+
+\begin{document}
+
+\maketitle
+\clearpage
+\pagenumbering{arabic}
+\clearpage
+
+\subsection*{Rouleringstijd voor het versturen van een routingtabel}
+Uiterlijk elke vijf seconden wordt er een routingtabel gestuurd om het systeem actueel te
+houden. Zorg ervoor dat de implementatie van de tijd flexibel is, in de vorm van een \blue{\texttt{\#define}} bijvoorbeeld, zodat er gemakkelijk aanpassingen kunnen worden gedaan. Voor de random delay wordt de NodeID als seed gebruikt.
+
+\subsection*{Verwijderen buren uit routing tabel}
+Als de routing tabel van een node drie updates heeft ondergaan terwijl er geen bericht van de directe buur(en) ontvangen is, worden de buren waar geen tabel van is ontvangen verwijderd.
+
+\subsection*{Auto acknowledge}
+De auto acknowledge staat uit voor het globale adres, omdat het crashes kan veroorzaken. Voor de privé adressen blijft de auto acknowledge aan.
+
+\subsection*{Standaard bericht headers}
+Standaarden voor de berichten die de nodes onder elkaar uitwisselen en naar het basisstation sturen. De bytes betiteld als BerichtType worden als \blue{\texttt{\#define}} in de code hernoemd met een expliciete naam.\\\\
+\underline{Routing header}: wordt routinematig verstuurd. Het routing bericht bevat de routing informatie die de node bezit. De routing header wordt over het globale adres verstuurd. De routing
+header wordt niet beantwoord. De routing header wordt als “ping” gebruikt om te laten weten dat een node bestaat. \\\\
+\blue{\texttt{Routing header:=}}
+
+\texttt{BerichtType EigenID NodeID Hopcnt}\\\\
+\texttt{BerichtType} : 0x02\\
+\texttt{EigenID} : ID nummer van de node die het bericht verzend.\\
+\texttt{NodeID} : De ID’s van nodes die in de routing tabel staan van de node die de routing tabel verzendt.\\
+\texttt{Hopcnt} : In de routing tabel wordt meteen neergezet hoeveel hops het naar een bepaalde
+node is. Van de node die het bericht ontvangt, wordt verwacht dat hij zelf de Hopcnt
+verandert voordat de routing tabel verder wordt gestuurd. Een Hopcnt van nul in de tabel is
+het adres van de node zelf. Een Hopcnt van één in de tabel is het adres van een directe
+verbinding met een andere node.\\\\
+\underline{Data header} : dit bericht bevat de data van een node. Het bericht wordt over een “privé”
+adres verstuurd naar een bepaalde node, of het basisstation, in het netwerk.\\\\
+\blue{\texttt{Data header :=}}
+
+\texttt{BerichtType EigenID DoelID PakketLengte Hopcnt Data}\\\\
+\texttt{BerichtType:}0x03\\ 
+\texttt{EigenID:}ID nummer van de node die het bericht origineel verzendt.\\
+\texttt{DoelID:}ID nummer van de node waar het bericht uiteindelijk naartoe moet.\\
+\texttt{PakketLengte:}Geeft aan hoe lang het totale datapakket is, als het datapakket groter is dan $32\, bytes$. De ontvanger weet zo dat het datapakket niet compleet is als \texttt{PakketLengte} $> 1$. Bij een totale pakket lengte van $3$ is \texttt{PakketLengte} $2$ tijdens het versturen van het eerste bericht. \texttt{PakketLengte} wordt afgeteld totdat alle berichten zijn verstuurd, of terwijl \texttt{PakketLengte} is $1$ bij het laatste bericht.\\
+\texttt{Hopcnt:}Geeft aan hoeveel hops het databericht mag “reizen” voordat het verwijderd wordt.\\
+\texttt{Data:}Sensordata.
+
+\subsection*{NRF instellingen}
+Hierin worden de gezamelijke instellingingen voor de NRF chip beschreven. In tabel~\ref{tabel:nrf} staan de instelling, in Code~\ref{code:c} staat de c code om deze instellingen toe te passen.
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		Instelling                  & Waarde                                                                            		\\ \hline
+		Channel                     & $111$                                                                               		\\ \hline
+		Auto retransmission retries & $10$                                                                                		\\ \hline
+		Auto retransmission delay   & $1000\, \mu s$                                                                           		\\ \hline
+		Auto acknowledge            & \begin{tabular}[c]{@{}l@{}}			Global address: Off\\ Private address: On\end{tabular} \\ 			\hline
+		CRC                         & 16 bit                                                                            		\\ \hline
+		Datarate                    & $250\, kbps$                                                                          		\\ \hline
+		Seed for random delay       & Own node ID number                                                                		\\ \hline
+	\end{tabular}
+	\caption{De NRF instellingen met bijbehorende waardes}				\label{tabel:nrf}
+\end{table}
+\newpage
+\begin{lstlisting}[caption={de instellingen in correcte C code},captionpos=b, label=code:c]
+nrfSetRetries(NRF_SETUP_ARD_1000US_gc, NRF_SETUP_ARC_10RETRANSMIT_gc);
+nrfSetChannel( 111 );
+nrfSetAutoAck( 0 ); // Global address: OFF. Private address: ON
+nrfSetCRCLength(NRF_CONFIG_CRC_16_gc);
+nrfSetDataRate(NRF_RF_SETUP_RF_DR_250K_gc);
+
+\end{lstlisting}
+*Instellen van vermogen om de radius van de sensoren in te stellen* Zelf specificaties over
+opstellen. Kan later getest worden.
+
+\end{document}
