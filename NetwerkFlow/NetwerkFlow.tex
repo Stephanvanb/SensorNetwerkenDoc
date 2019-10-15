@@ -95,6 +95,116 @@ TODO: Beschrijf een test voor het testen van het Basisstation dat data ontvangt 
 TODO: Beschrijf de demonstratie (oplevering blok 1).
 
 \newpage
+\subsection{Testopstelling} \label{Testopstelling}
+In figuur \ref{testopstelling} is de testopstelling te zien. Hierbij vertegenwoordigen 5 Xmega's de sensor modules en 1 Xmega het basisstation van het netwerk. De Xmega die het basisstation vertegenwoordigd is verbonden met een Raspberry Pi 3b+  waar een Raspberry 7 inch touchscreen display aan verbonden zit. Op dit display word alle ontvangen sensordata per sensor module getoond en een routingtable waarin valt af te lezen welke nodes er zijn gezien in het netwerk en hoeveel hops deze verwijderd zijn van het basisstation.
+\begin{figure}[h!]
+	\centering
+	%\hspace*{-2cm}
+	\includegraphics[width=8cm]{media/testOpstellingNetwerk.jpeg}
+	\caption{Testopstelling voor de demonstratie van het proof of concept} \label{testopstelling}
+\end{figure}
+
+\newpage
+\subsection{Situaties die het netwerk veranderen} \label{SituatieOmschrijving}
+In tabel \ref{Situaties} is een overzicht te zien van alle situaties die een belangrijke invloed kunnen hebben op een node. Ook zal er in deze tabel worden omschreven wat de verwachtte reacties van het netwerk zijn op deze situaties.
+\begin{table}[ht]
+	\centering
+	\caption{invloedrijke situaties voor het netwerk en de verwachtte reacties}
+	\begin{tabular}{ | m{6cm} | m{6cm}| } 
+		\hline
+		\textbf{Situatie:} & \textbf{Verwachting:} \\
+		\hline
+		Sensor module verplaatst zich richting een nieuwe buur & De verplaatste sensor module zal aan de burenlijst worden toegevoegd van de buur waar hij zich naartoe verplaatst heeft
+		\\
+		\hline
+		Sensor module verplaatst zich van een buur af & De verplaatste sensor module zal uit de burenlijst worden verwijderd van de buur waar hij zich vandaan verplaatst heeft en kan eventueel (afhankelijk van de richting en afstand) geen verbinding meer maken met andere sensor modules
+		\\
+		\hline
+		Sensor module valt opeens uit  & De sensor module zal na een bepaalde tijd verwijderd worden uit de burenlijsten en zal in de routingtable bij het basis station als inactief worden gesteld
+		\\ 
+		\hline
+		Signalen van een sensor module worden opeens geblokkeerd & in principe hetzelfde als wanneer een sensor module uitvalt. Verder zal de sensor module na een bepaalde tijd alle buren uit de burenlijst verwijderen aangezien het ook geen berichten meer ontvangt
+		\\ 
+		\hline
+		Sensor module is niet direct verbonden met het basis station maar wel met andere sensor modules & De sensor module zal proberen via andere sensor modules zijn data bij het basis station terecht te krijgen.
+		\\
+		\hline
+	\end{tabular} 
+	\label{Situaties}
+\end{table}
+
+\section{Demonstratie test}
+In dit hoofdstuk worden de resultaten van de demonstratie test voor het proof of concept besproken. De demonstratie test is uitgevoerd volgens de testopstelling die wordt besproken in paragraaf \ref{Testopstelling} waarbij de diverse situaties die in paragraaf \ref{SituatieOmschrijving} getest worden. in tabel \ref{Situaties} is een overzicht te vinden van alle situaties die getest worden en wat de resultaten zijn die verwacht worden. De situaties zullen op volgorde van de tabel besproken worden.
+\subsection{Sensormodule verplaats richting nieuwe buur} \label{VerplaatsNaar}
+Om deze situatie te testen was er een sensormodule (met ID 52) op een dusdanige afstand van de andere modules geplaatst dat deze geen buren heeft, vervolgens is de sensormodule met ID 83 richting sensormodule 52 gelopen. De verwachting was dat sensormodule 83 zal worden toegevoegd aan de burenlijst van sensormodule 52.
+\begin{figure}[h!]
+	\centering
+	%\hspace*{-2cm}
+	\includegraphics[width=4cm]{TestResults/LooptNaarNode/LoopNaarNieuweBuur_52_83.PNG}
+	\caption{Nieuwe buur 83 wordt toegevoegd aan burenlijst} \label{LoopNaarNode}
+\end{figure}
+In figuur \ref{LoopNaarNode} is eerst te zien hoe sensormodule 83 uit de burenlijst verwijderd wordt omdat sensormodule 52 met een dusdanige afstand is verplaatst dat ze niet meer met elkaar in verbinding staan. Vervolgens verplaatst sensormodule 83 zich richting sensormodule 52, waarna er vervolgens in figuur \ref{LoopNaarNode} te zien is hoe deze weer wordt toegevoegd aan de burenlijst.
+
+\subsection{Sensormodule verplaats van buur af}
+Zoals bij de testsituatie van paragraaf \ref{VerplaatsNaar} wordt er bij deze testsituatie wederom gebruik gemaakt van sensormodules 52 en 83. Bij deze situatie zijn zowel sensormodule 52 als 83 beide op een dusdanige afstand van de andere sensormodules, dat ze alleen elkaar zien. Vervolgens verplaatst sensormodule 83 zich van 52 af. De verwachting is dat sensormodule 83 wordt verwijderd uit de burenlijst van 52.
+\newpage
+
+\begin{figure}[h!]
+	\centering
+	%\hspace*{-2cm}
+	\includegraphics[width=4cm]{TestResults/LooptWegVanNode/LoopWegBijBuur_52_83.PNG}
+	\caption{Buur 83 wordt verwijderd uit burenlijst} \label{LoopWegVanNode}
+\end{figure}
+In figuur \ref{LoopWegVanNode} is te zien hoe sensormodule 83 wordt verwijderd uit de burenlijst van sensormodule 52 nadat deze zo ver is verplaatst dat de verbinding verbroken werd.
+
+\subsection{Sensormodule valt uit} \label{ValtUit}
+Voor het testen van deze situatie waren alle nodes verbonden met elkaar. De debug log die is te zien in figuur \ref{NodeValtUit} is gegenereerd vanuit het basisstation. Uit het niets zal sensormodule 52 uitvallen omdat de voeding wordt afgesloten. De verwachting is dat het basisstation sensormodule 52 uit zijn burenlijst verwijderd.
+\begin{figure}[h!]
+	\centering
+	%\hspace*{-2cm}
+	\includegraphics[width=4cm]{TestResults/NodeValtUit/NodeValtWeg_klein.png}
+	\caption{Buur 52 wordt verwijderd uit burenlijst basisstation} \label{NodeValtUit}
+\end{figure}
+In figuur \ref{NodeValtUit} is te zien hoe het basisstation van alle 4 andere sensormodules (51, 53. 77, 83). Bij alle ontvangen berichten is de 2e byte het ID van de sensormodule, door te kijken van welk ID alle andere berichten komen is vast te stellen dat alle andere 4 sensormodules actief zijn. Uiteindelijk wordt sensormodule 52 verwijderd uit de burenlijst van het basisstation, omdat deze inactief is.
+
+\subsection{Signalen sensormodule geblokkeerd}
+Het testen van deze situatie was vergelijkbaar met die van paragraaf \ref{ValtUit}, echter i.p.v. dat sensormodule 52 van de voeding werd afgesloten, werd deze in een metalen kistje gestopt, zie figuur \ref{kistje}. 
+\newpage
+\begin{figure}[h!p]
+	\centering
+	%\hspace*{-2cm}
+	\includegraphics[width=4cm]{media/kistje.jpg}
+	\caption{Metalen kistje voor signaal blokkade} \label{kistje}
+\end{figure}
+d.m.v. dit metalen kistje worden alle signalen van en naar sensormodule 52 geblokkeerd. De verwachting is dat sensormodule 52 wordt verwijderd uit de burenlijsten van alle andere sensormodules.
+\begin{figure}[h!p]
+	\centering
+	%\hspace*{-2cm}
+	\includegraphics[width=4cm]{TestResults/FaradayKooi/51_Blokkade.jpeg}\hfill
+	\includegraphics[width=4cm]{TestResults/FaradayKooi/83_Blokkade.jpeg}\hfill
+	\includegraphics[width=4cm]{TestResults/FaradayKooi/105_verliest_52.png}
+	\caption{sensormodule 51, 83 en het basisstation verwijderen 52 uit burenlijst} \label{faradayBlock}
+\end{figure}
+Zoals is te zien in figuur \ref{faradayBlock} wordt sensormodule 52 verwijderd bij de andere sensormodules. Wederom valt hier, net zoals in paragraaf \ref{ValtUit}, te zien hoe de andere sensormodules nog wel berichten ontvangen van elkaar.
+
+\subsection{Data doorsturen via andere sensormodule}
+Om deze situatie te testen is er een sensormodule op een bepaalde afstand van de rest van het netwerk gezet waardoor deze geen verbinding meer heeft met het netwerk. Vervolgens is er een andere sensormodule tussen het netwerk en het de "eenzame" sensormodule in geplaatst. De verwachting is dat de "eenzame" sensormodule verbinding maakt met sensormodule die er tussen is geplaatst, en via hem sensordata stuurt naar het basisstation. De "eenzame" sensormodule is 52, degene die er tussen is geplaatst is 83.
+\newpage
+\begin{figure}[h!]
+	\centering
+	%\hspace*{-2cm}
+	\includegraphics[width=5cm]{TestResults/DataViaBuur/83_StuurtDataDoor.jpeg}
+	\caption{sensormodule 83 stuurt sensordata van 52 door} \label{Doorsturen83}
+\end{figure}
+In figuur \ref{Doorsturen83} is te zien hoe sensormodule 52 door 83 gezien wordt. Vervolgens ontvangt sensormodule 83 sensordata van 52, die voor het basisstation (105) bedoeld is (zie blauw bericht wat met 0x03 begint).
+\begin{figure}[h!]
+	\centering
+	%\hspace*{-2cm}
+	\includegraphics[width=5cm]{TestResults/DataViaBuur/DataRecevied105.png}
+	\caption{basisstation ontvangt doorgestuurde data via 83} \label{Doorsturen105}
+\end{figure}
+In figuur \ref{Doorsturen105} is te zien hoe het basisstation de sensordata van sensormodule 52 ontvangt, terwijl het via sensormodule 83 is doorgestuurd. Zie hiervoor het blauwe bericht wat met 0x03 begint. Zoals bij alle andere berichten is de 2e byte het ID waar het bericht origineel vandaan komt, hieraan is te zien dat het bericht van sensormodule 52 komt. 
+\newpage
 \bibliographystyle{ieeetr}
 
 \bibliography{POCbronnen} 
