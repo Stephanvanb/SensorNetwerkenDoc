@@ -6,8 +6,7 @@
 \usepackage[table, xcdraw, svgnames]{xcolor}
 \usepackage{listings, lstautogobble}
 \usepackage{subfig}
-
-\renewcommand{\figurename}{Figuur}
+\usepackage[dutch]{babel}
 
 \setlength{\parskip}{0.5em}
 
@@ -30,16 +29,45 @@ Het doel van de opdracht is om een dynamisch netwerk van sensornodes te maken, w
 
 Het doel van dit document is om een 'proof of concept' te geven van de algemene netwerkstuctuur waar de sensornodes tijdens het vak "Sensormodule Ontwerp" gebruik van zullen maken.
 
-
 \section{Algemene Node Programma}
 Zoals besproken in de inleiding van dit document het grootste deel van de programma code voor de node MCU's gelijk. In dit hoofdstuk wordt deze code besproken. 
 
 \subsection{Routing}
-Het is belangrijk dat het sensornetwerk dynamisch is. Dit wil zeggen dat het het netwerk waarover de sensordata verstuurd wordt op ieder willekeurig moment kan veranderen. In de praktijk gebeurd dit wanneer de draadloze sensornodes van plaats veranderen of uit gaan. 
-
-Om een 'up to date' beeld te houden van de beschikbare nodes in het netwerk houdt iedere een een routing tabel bij. Deze tabel wordt opgesteld uit berichten die ontvangen worden van de directe buren van de node. In die berichten staat informatie over de directe buren van de nodes die de berichten sturen. 
-
-%%%%%Moet nog aangevuld worden (Zie GLO)%%%%%%%
+Het is belangrijk dat het sensornetwerk dynamisch is. Dit wil zeggen dat het netwerk waarover de sensordata verstuurd wordt op ieder willekeurig moment kan veranderen. In de praktijk gebeurd dit wanneer de draadloze sensornodes van plaats veranderen of om welke reden dan ook stopt met communiceren.\\
+Om voortdurend valide informatie te hebben over het netwerk, broadcasten de nodes periodiek de informatie die ze op dat moment hebben over het netwerk. De informatie bestaat uit het aantal hops dat een node denkt dat andere nodes verwijderd zijn. Uit deze informatie kunnen aanliggende nodes opmaken welke nodes te bereiken zijn via de node die net zijn netwerkinformatie broadcast.\\
+Wanneer een node de netwerkinformatie van een buur ontvangt zal deze informatie worden opgeslagen in een tweedimensionaal array. Een voorbeeld situatie is te zien in figuur \ref{fig:voorbeeld} en de bijbehorende routingtable in tabel \ref{table:routingtable}.\\
+In tabel \ref{table:routingtable} staat in rij N de routinginformatie die node N bezit, in kolom M staat de afstand tussen node N en node M.\\
+Wanneer node Z (zender) een bericht wil sturen naar node O (Ontvanger), kijkt node Z en kolom O van zijn routingtabel. Node Z checkt in de rij van elke directe buur om de laagste hopcount te vinden. Wanneer deze is gevonden word het bericht naar de buur met de laagste hopcount verstuurd die dit proces herhaalt tot het bericht bij de ontvanger is.
+\begin{figure}
+\centering
+\includegraphics[width=.5\textwidth, keepaspectratio]{media/Voorbeeld_netwerk.pdf}
+\caption{Voorbeeld netwerk.}
+\label{fig:voorbeeld}
+\end{figure}
+\begin{table}
+\centering
+\begin{tabular}{|r||r|r|r|r|r|r|}
+\hline
+Routingdata  & Afstand  & Afstand & Afstand & Afstand & Afstand & Afstand\\
+van: & Node 1: & Node 2: & Node 3: & Node 4: & Node 5: & Node 6: \\
+\hline
+Node 1 & 0 & 2 & 1 & 2 & 3 & 1 \\
+\hline
+Node 2 & 2 & 0 & 1 & 1 & 2 & 3 \\
+\hline
+Node 3 & 1 & 1 & 0 & 1 & 2 & 2 \\
+\hline
+Node 4 & 2 & 1 & 1 & 0 & 1 & 3 \\
+\hline
+Node 5 & 3 & 2 & 2 & 1 & 0 & 4 \\
+\hline
+Node 6 & 1 & 3 & 2 & 3 & 4 & 0 \\
+\hline
+\end{tabular}
+\caption{Routingtable van de nodes in het netwerk in figuur \ref{fig:voorbeeld}.}
+\label{table:routingtable}
+\end{table}
+%%%%% Moet nog aangevuld worden (Zie GLO)%%%%%%%
 \subsection{Flowchart}
 Om de algemene node-code inzichtelijk te maken is gebruik gemaakt van ene flowchart. In Figuur~\ref{fig:flowchart} is deze flowchart te zien.
 
