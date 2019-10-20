@@ -13,7 +13,7 @@
 
 \title{Sensornetwerk Proof of Concept v0.2}
 \author{Groep 5}
-\date{September 2018}
+\date{September 2019}
 \pagenumbering{gobble}
 
 \begin{document}
@@ -35,30 +35,30 @@ Het doel van dit document is om een 'proof of concept' te geven van de algemene 
 Zoals besproken in de inleiding van dit document het grootste deel van de programma code voor de node MCU's gelijk. In dit hoofdstuk wordt deze code besproken. 
 
 \subsection{Routing}
-Het is belangrijk dat het sensornetwerk dynamisch is. Dit wil zeggen dat het het netwerk waarover de sensordata verstuurd wordt op ieder willekeurig moment kan veranderen. In de praktijk gebeurd dit wanneer de draadloze sensornodes van plaats veranderen of uit gaan. 
+Het is belangrijk dat het sensornetwerk dynamisch is. Dit wil zeggen dat het het netwerk waarover de sensordata verstuurd wordt op ieder willekeurig moment kan veranderen. In de praktijk gebeurt dit wanneer de draadloze sensornodes van positie veranderen of uit gaan. 
 
-Om een 'up to date' beeld te houden van de beschikbare nodes in het netwerk houdt iedere een een routing tabel bij. Deze tabel wordt opgesteld uit berichten die ontvangen worden van de directe buren van de node. In die berichten staat informatie over de directe buren van de nodes die de berichten sturen. 
+Om een 'up to date' beeld te houden van de beschikbare nodes in het netwerk houdt iedere node een routing tabel bij. Deze tabel wordt opgesteld uit berichten die ontvangen worden van de directe buren van de node. In die berichten staat informatie over de directe buren van de nodes die de berichten sturen. 
 
 %%%%%Moet nog aangevuld worden (Zie GLO)%%%%%%%
 \subsection{Flowchart}
-Om de algemene node-code inzichtelijk te maken is gebruik gemaakt van ene flowchart. In Figuur~\ref{fig:flowchart} is deze flowchart te zien.
+Om de algemene node-code inzichtelijk te maken is gebruik gemaakt van een flowchart. In figuur~\ref{fig:flowchart} is deze flowchart te zien.
 
 \begin{figure}[!h]
 	\centering	
 	\includegraphics[width=.5\textwidth, keepaspectratio]{media/Pflow.pdf}
-    \caption{Nadat de node opgestart wordt (Boot) de MCU geïnitialiseerd in het blok [Initialize]
-     \textbf{Figuur dient in deze versie als voorbeeld en zal geupdate worden wanneer het basis ontwerp af is.}}
+    \caption{Nadat de node opgestart is (Boot), wordt de MCU geïnitialiseerd in het blok [Initialize].\\
+     \textbf{Figuur dient in deze versie als voorbeeld en zal geüpdatet worden wanneer het basisontwerp af is.}}
     \label{fig:flowchart}
 \end{figure}
 %Zie GLO
 
 \subsection{Statemachine}
-Omdat MCU veel aan het wachten is op berichten om deze vervolgens te verwerken is gekozen als implementatie een statemachine te gebruiken. Deze is afgebeeld in Figuur~\ref{fig:Statemachine} 
-Statemachine die de verschillende states laat zien waar de Xmega in komt vanaf het opstarten.
+Een groot gedeelte van de tijd is de MCU is aan het wachten op berichten om deze vervolgens te verwerken. Daarom is er voor gekozen om een statemachine te gebruiken. Deze is afgebeeld in figuur~\ref{fig:Statemachine}.
+
 
 \begin{figure}[!ht]
-	\includegraphics[width=.8\textwidth, keepaspectratio]{media/Pstate.pdf}
-    \caption{ \textbf{Figuur dient in deze versie als voorbeeld en zal geupdate worden wanneer het basis ontwerp af is.}}
+	\includegraphics[width=.8\textwidth, keepaspectratio]{media/PState.pdf}
+    \caption{Statemachine die de verschillende states laat zien waar de Xmega in komt vanaf het opstarten.\\ \textbf{Figuur dient in deze versie als voorbeeld en zal geupdate worden wanneer het basis ontwerp af is.}}
     \label{fig:Statemachine}
 \end{figure}
 %Zie GLO
@@ -86,7 +86,7 @@ Mask & Description           & Pipe \\ \hline
 \end{table}
 
 \section{Netwerk Test}
-Om te bewijzen dat het netwerk waar de sensornodes op via zullen opereren werkt, zijn de volgende test uitgevoerd. 
+Om te bewijzen dat het sensornetwerk waar de modules via zullen opereren werkt, zijn er verschillende tests uitgevoerd. Deze worden beschreven in onderstaande paragrafen.
 \subsection{Routing Test}
 TODO: Beschrijf een test voor het opzetten van een routing tabel met meerdere nodes.
 \subsection{Basis Station test}
@@ -94,14 +94,16 @@ TODO: Beschrijf een test voor het testen van het Basisstation dat data ontvangt 
 \subsection{Demonstratie}
 TODO: Beschrijf de demonstratie (oplevering blok 1).
 
+\section{Demonstratie proof of concept} \label{demonstratie}
+In dit hoofdstuk wordt beschreven hoe de "\textit{proof of concept}" gedemonstreerd wordt. Hierbij zal er onder andere uitleg worden gegeven over de test opstelling, situaties die invloed hebben op het netwerk (zoals het uitvallen van een node) en wat de verwachtingen zijn wanneer dergelijke situaties wel of niet optreden. Vervolgens wordt het netwerk onder deze omstandigheden getest en zal het vastgelegd worden d.m.v. datalogs. Op basis van deze datalogs zal uitgelegd worden of het gedrag van het netwerk overeen kwam met onze verwachtingen.
 \newpage
 \subsection{Testopstelling} \label{Testopstelling}
-In figuur \ref{testopstelling} is de testopstelling te zien. Hierbij vertegenwoordigen 5 Xmega's de sensor modules en 1 Xmega het basisstation van het netwerk. De Xmega die het basisstation vertegenwoordigd is verbonden met een Raspberry Pi 3b+  waar een Raspberry 7 inch touchscreen display aan verbonden zit. Op dit display word alle ontvangen sensordata per sensor module getoond en een routingtable waarin valt af te lezen welke nodes er zijn gezien in het netwerk en hoeveel hops deze verwijderd zijn van het basisstation.
+In figuur \ref{testopstelling} is de testopstelling te zien. Hierbij vertegenwoordigen 5 Xmega's de sensormodules en 1 Xmega het basisstation van het netwerk. De Xmega die het basisstation vertegenwoordigt is verbonden met een Raspberry Pi 3b+  waar een Raspberry 7 inch touchscreen display aan verbonden zit. Op dit display wordt alle ontvangen sensordata per sensormodule getoond en een routingtable waarin valt af te lezen welke nodes er zijn gezien in het netwerk en hoeveel hops deze verwijderd zijn van het basisstation.
 \begin{figure}[h!]
 	\centering
 	%\hspace*{-2cm}
 	\includegraphics[width=8cm]{media/testOpstellingNetwerk.jpeg}
-	\caption{Testopstelling voor de demonstratie van het proof of concept} \label{testopstelling}
+	\caption{Testopstelling voor de demonstratie van de proof of concept} \label{testopstelling}
 \end{figure}
 
 \newpage
@@ -114,19 +116,22 @@ In tabel \ref{Situaties} is een overzicht te zien van alle situaties die een bel
 		\hline
 		\textbf{Situatie:} & \textbf{Verwachting:} \\
 		\hline
-		Sensor module verplaatst zich richting een nieuwe buur & De verplaatste sensor module zal aan de burenlijst worden toegevoegd van de buur waar hij zich naartoe verplaatst heeft
+		Sensormodule verplaatst zich richting een nieuwe buur & De verplaatste sensormodule zal aan de burenlijst worden toegevoegd van de buur waar hij zich naartoe verplaatst heeft
 		\\
 		\hline
-		Sensor module verplaatst zich van een buur af & De verplaatste sensor module zal uit de burenlijst worden verwijderd van de buur waar hij zich vandaan verplaatst heeft en kan eventueel (afhankelijk van de richting en afstand) geen verbinding meer maken met andere sensor modules
+		Sensormodule verplaatst zich van een buur af & De verplaatste sensormodule zal uit de burenlijst worden verwijderd van de buur waar hij zich vandaan verplaatst heeft en kan eventueel (afhankelijk van de richting en afstand) geen verbinding meer maken met andere sensormodules
 		\\
 		\hline
-		Sensor module valt opeens uit  & De sensor module zal na een bepaalde tijd verwijderd worden uit de burenlijsten en zal in de routingtable bij het basis station als inactief worden gesteld
+		Sensormodule valt opeens uit  & De sensormodule zal na een bepaalde tijd verwijderd worden uit de burenlijsten en zal in de routingtable bij het basis station als inactief worden gesteld
 		\\ 
 		\hline
-		Signalen van een sensor module worden opeens geblokkeerd & in principe hetzelfde als wanneer een sensor module uitvalt. Verder zal de sensor module na een bepaalde tijd alle buren uit de burenlijst verwijderen aangezien het ook geen berichten meer ontvangt
+		Sensormodule stuurt onzin data over het netwerk & Aangezien het deze berichten waarschijnlijk niet aan de ISO-standaarden voldoen zullen deze niet worden doorgestuurd of opgenomen door het basisstation
 		\\ 
 		\hline
-		Sensor module is niet direct verbonden met het basis station maar wel met andere sensor modules & De sensor module zal proberen via andere sensor modules zijn data bij het basis station terecht te krijgen.
+		Signalen van een sensormodule worden opeens geblokkeerd & in principe hetzelfde als wanneer een sensormodule uitvalt. Verder zal de sensormodule na een bepaalde tijd alle buren uit de burenlijst verwijderen aangezien het ook geen berichten meer ontvangt
+		\\ 
+		\hline
+		Sensormodule is niet direct verbonden met het basis station maar wel met andere sensormodules & De sensormodule zal proberen via andere sensormodules zijn data bij het basis station terecht te krijgen.
 		\\
 		\hline
 	\end{tabular} 
