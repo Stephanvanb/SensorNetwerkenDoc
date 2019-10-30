@@ -23,11 +23,11 @@
 \clearpage
 
 \section{Inleiding}
-Dit document beschrijft de software implementaties van groep 5 voor het vak "Sensornetwerk Ontwerp" aan de Hogeschool van Amsterdam.
+Dit document beschrijft de software implementaties van groep 5 voor het vak ``Sensornetwerk Ontwerp'' aan de Hogeschool van Amsterdam.
 
-Het doel van de opdracht is om een dynamisch netwerk van sensornodes te maken, waarbij in dit document de nadruk ligt op de algemene netwerkstructuur en de implementatie in MCU van de sensornodes. Hiervoor geldt over het algemeen dat het stuk software wat in dit document beschreven wordt gelijk is voor alle sensornodes. Tijdens de ontwikkeling van de individuele sensorimplementaties (vak "Sensormodule Ontwerp") kan de code afhankelijk per node worden aangepast. 
+Het doel van de opdracht is om een dynamisch netwerk van sensornodes te maken, waarbij in dit document de nadruk ligt op de algemene netwerkstructuur en de implementatie in MCU van de sensornodes. Hiervoor geldt over het algemeen dat het stuk software wat in dit document beschreven wordt gelijk is voor alle sensornodes. Tijdens de ontwikkeling van de individuele sensorimplementaties (vak ``Sensormodule Ontwerp'') kan de code afhankelijk per node worden aangepast. 
 
-Het doel van dit document is om een 'proof of concept' te geven van de algemene netwerkstuctuur waar de sensornodes tijdens het vak "Sensormodule Ontwerp" gebruik van zullen maken.
+Het doel van dit document is om een `proof of concept' te geven van de algemene netwerkstuctuur waar de sensornodes tijdens het vak ``Sensormodule Ontwerp'' gebruik van zullen maken.
 
 \section{Algemene Node Programma}
 Zoals besproken in de inleiding van dit document het grootste deel van de programma code voor de node MCU's gelijk. In dit hoofdstuk wordt deze code besproken. 
@@ -123,7 +123,7 @@ TODO: Beschrijf een test voor het testen van het Basisstation dat data ontvangt 
 TODO: Beschrijf de demonstratie (oplevering blok 1).
 
 \section{Demonstratie proof of concept} \label{demonstratie}
-In dit hoofdstuk wordt beschreven hoe de "\textit{proof of concept}" gedemonstreerd wordt. Hierbij zal er onder andere uitleg worden gegeven over de test opstelling, situaties die invloed hebben op het netwerk (zoals het uitvallen van een node) en wat de verwachtingen zijn wanneer dergelijke situaties wel of niet optreden. Vervolgens wordt het netwerk onder deze omstandigheden getest en zal het vastgelegd worden d.m.v. datalogs. Op basis van deze datalogs zal uitgelegd worden of het gedrag van het netwerk overeen kwam met onze verwachtingen.
+In dit hoofdstuk wordt beschreven hoe de ``\textit{proof of concept}'' gedemonstreerd wordt. Hierbij zal er onder andere uitleg worden gegeven over de test opstelling, situaties die invloed hebben op het netwerk (zoals het uitvallen van een node) en wat de verwachtingen zijn wanneer dergelijke situaties wel of niet optreden. Vervolgens wordt het netwerk onder deze omstandigheden getest en zal het vastgelegd worden d.m.v. datalogs. Op basis van deze datalogs zal uitgelegd worden of het gedrag van het netwerk overeen kwam met onze verwachtingen.
 \newpage
 \subsection{Testopstelling} \label{Testopstelling}
 In figuur \ref{testopstelling} is de testopstelling te zien. Hierbij vertegenwoordigen 5 Xmega's de sensormodules en 1 Xmega het basisstation van het netwerk. De Xmega die het basisstation vertegenwoordigt is verbonden met een Raspberry Pi 3b+  waar een Raspberry 7 inch touchscreen display aan verbonden zit. Op dit display wordt alle ontvangen sensordata per sensormodule getoond en een routingtable waarin valt af te lezen welke nodes er zijn gezien in het netwerk en hoeveel hops deze verwijderd zijn van het basisstation.
@@ -221,7 +221,7 @@ d.m.v. dit metalen kistje worden alle signalen van en naar sensormodule 52 geblo
 Zoals is te zien in figuur \ref{faradayBlock} wordt sensormodule 52 verwijderd bij de andere sensormodules. Wederom valt hier, net zoals in paragraaf \ref{ValtUit}, te zien hoe de andere sensormodules nog wel berichten ontvangen van elkaar.
 
 \subsection{Data doorsturen via andere sensormodule}
-Om deze situatie te testen is er een sensormodule op een bepaalde afstand van de rest van het netwerk gezet waardoor deze geen verbinding meer heeft met het netwerk. Vervolgens is er een andere sensormodule tussen het netwerk en het de "eenzame" sensormodule in geplaatst. De verwachting is dat de "eenzame" sensormodule verbinding maakt met sensormodule die er tussen is geplaatst, en via hem sensordata stuurt naar het basisstation. De "eenzame" sensormodule is 52, degene die er tussen is geplaatst is 83.
+Om deze situatie te testen is er een sensormodule op een bepaalde afstand van de rest van het netwerk gezet waardoor deze geen verbinding meer heeft met het netwerk. Vervolgens is er een andere sensormodule tussen het netwerk en het de ``eenzame'' sensormodule in geplaatst. De verwachting is dat de ``eenzame'' sensormodule verbinding maakt met sensormodule die er tussen is geplaatst, en via hem sensordata stuurt naar het basisstation. De ``eenzame'' sensormodule is 52, degene die er tussen is geplaatst is 83.
 \newpage
 \begin{figure}[h!]
 	\centering
