@@ -36,6 +36,7 @@
 \usepackage{subcaption}
 \usepackage[font=small]{caption}
 \usepackage{units}
+\usepackage{relsize}
 
 \linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
 
@@ -44,16 +45,16 @@
 \renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
 
 \renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
-\begin{flushright} % Right align
-{\LARGE\@title} % Increase the font size of the title
-
-\vspace{50pt} % Some vertical space between the title and author name
-
-{\large\@author} % Author name
-\\\@date % Date
-
-\vspace{40pt} % Some vertical space between the author block and abstract
-\end{flushright}
+	\begin{flushright} % Right align
+		{\LARGE\@title} % Increase the font size of the title
+		
+		\vspace{50pt} % Some vertical space between the title and author name
+		
+		{\large\@author} % Author name
+		\\\@date % Date
+		
+		\vspace{40pt} % Some vertical space between the author block and abstract
+	\end{flushright}
 }
 
 %----------------------------------------------------------------------------------------
@@ -61,194 +62,238 @@
 %----------------------------------------------------------------------------------------
 
 \title{\textbf{Onderzoeksraamwerk}\\ % Title
-Implementaties van koolstofmonoxide sensoren in een dynamisch sensornetwerk} % Subtitle
+	Implementaties van koolstofmonoxide sensoren in een dynamisch sensornetwerk} % Subtitle
 
 \author{\textsc{R. Bolding} % Author
-\\{\textit{Amsterdam University of Applied Sciences\\ 
-HvA\\
-Sensor Netwerken: groep 5\\
-Studentnummer: 500757732}}} % Institution
+	\\{\textit{Amsterdam University of Applied Sciences\\ 
+			HvA\\
+			Sensor Netwerken: groep 5\\
+			Studentnummer: 500757732}}} % Institution
 
 \date{20 September, 2019} % Date
 
 %----------------------------------------------------------------------------------------
 \bibliographystyle{IEEEtran}
 \begin{document}
-\captionsetup[figure]{labelfont={bf},name={Fig},labelsep=period}
-\captionsetup{justification=centering}
-\renewcommand{\contentsname}{Inhoudsopgave}
-\hypersetup{hidelinks=true}
-\maketitle % Print the title section
-
-%----------------------------------------------------------------------------------------
-%	ABSTRACT AND KEYWORDS
-%----------------------------------------------------------------------------------------
-
-%\renewcommand{\abstractname}{Summary} % Uncomment to change the name of the abstract to something else
-
-
-\vspace{10pt} % Some vertical space between the abstract and first section
-
-%----------------------------------------------------------------------------------------
-%	ESSAY BODY
-%-----------------------------------------------
-\newpage
-\tableofcontents
-\newpage
-\section{Inleiding}
-In dit verslag wordt de implementatie van een koolstofmonoxide sensor in een dynamisch sensornetwerk besproken voor het project: "Sensornetwerken". Het doel van dit project is om een low-power sensormodule te ontwikkelen die een grootheid met relatie tot de luchtkwaliteit meet en deze meetdata vervolgens deelt in een dynamisch draadloos sensornetwerk. De gekozen grootheid bedraagt in dit geval koolstofmonoxide (Hierna naar gerefereerd onder de scheikundige afkorting CO). In eerste instantie was er gekozen voor stikstofdioxide, de onderbouwing om van keuze te veranderen staat beschreven in appendix A. Allereerst zal er besproken worden wat voor grootheid CO is en waarom het meten hiervan nuttig is. Voor dit onderzoek wordt er gekeken naar de gebruikelijke concentraties, grenswaardes uitschieters van CO concentraties in professionele werkomgevingen (zoals kantoorpanden). Op basis van die informatie zullen de specificaties van de sensormodule worden opgesteld, die op hun beurt weer de basis vormen voor de gemaakte keuzen bij het ontwerp van de sensor. Verder wordt er ook nog een globale uitleg gegeven over de werking van het netwerk.
-
-\section{Koolstofmonoxide}
-Koolstofmonoxide (CO) is een verbinding tussen koolstof en zuurstof. Het is een kleur- en geurloos gas. CO komt vrij bij een onvolledige verbranding. Dit kan erg gevaarlijk zijn voor de gezondheid omdat het gas je ongemerkt vergiftigt. Het word dan ook wel eens een "sluipmoordenaar" genoemd. 
-
-\subsection{Ontstaan van CO}
-Bij de verbranding van koolstofverbindingen ontstaat er normaal CO2. Als de verbranding onvolledig is, door bijvoorbeeld een tekort aan zuurstof, ontstaat er CO. Een veel voorkomende oorzaak van CO productie zijn niet goed afgestelde of niet goed onderhouden gas kachels en cv-ketels.
-
-\subsection{Effecten op gezondheid}
-CO is erg gevaarlijk voor de mens omdat het geur en kleurloos is. Bij inademing van CO word de zuurstofopname verstoord \cite{Effecten Koolmonoxide}. In plaats van zuurstof, bind de CO zich aan de rode bloedcellen. Omdat CO zich sterker hecht aan de rode bloedcellen dan zuurstof, word er minder zuurstof door het lichaam vervoerd. 
-\\
-De effecten van blootstelling aan CO zijn het gevolg van een zuurstoftekort in het bloed. Hoe meer CO er word opgenomen hoe minder zuurstof er kan worden opgenomen. 
-
-\section{Algemene koolstofmonoxide concentraties}
-Het RIVM heeft tussen april 2007 tot en met januari 2008 metingen gedaan in 1028 huishoudens. In 169 van de 1028 huishoudens werden werden er concentraties boven het detectie limiet van 1 \textit{parts per million} (hierna naar gerefereerd als \textit{ppm}) gevonden. In 8 huishoudens werden er waardes van tussen de 25 en 75 \textit{ppm}, dit waren de meest extreme waardes. in 10 andere huishoudens werden er waardes aangetroffen van tussen de 10 en 25 \textit{ppm} en in de rest van de huishoudens (verreweg de meesten) werden er waardes aangetroffen tussen de 1 en 9 \textit{ppm} \cite{RIVM huurwoningen}. Over een werkdag van 8 uur wordt een tijdgewogen gemiddelde concentratie van 25 \textit{ppm} als grenswaarde aangenomen, over 15 minuten is dit 150 \textit{ppm}. De advies waarden van de Wereldgezondheidsorganisatie (Engels: World Health Organization, WHO) zijn 10 \textit{ppm} als tijdgewogen gemiddelde over 8 uurl en 25 \textit{ppm} over 1 uur \cite{Blootstelling aan CO}.
-\subsection{Koolstofmonoxide concentraties in de HvA Leeuwenburg}
-Om meer te weten te komen over de huidige manieren van meten van de koolstofmonoxide concentraties in het gebouw van de HvA faculteit techniek, is er contact gezocht het gebouwbeheer. Uit een klein gesprek is gebleken dat er momenteel alleen in de garage CO meters hangen, die wanneer er een bepaalde grenswaarde wordt overschreden (momenteel nog onbekend voor ons welke grenswaarde dat is) alarm slaan waarna vervolgens iedereen de garage moet verlaten.
-
-\section{Luchtkwaliteit meten}
-Zoals eerder werd besproken worden de te ontwikkelen sensor modules gebruikt om de luchtkwaliteit te meten. Hierbij wordt dus niet alleen bedoeld om een detector te maken die afgaat na het overschrijden van een bepaalde waarde, maar is het een doel om ook te kunnen meten wanneer je welke concentratie CO in de lucht hebt zitten en hoe ver deze concentratie ligt van de grenswaardes. Om de gevoeligheid en detectielimit van de sensor te bepalen, wordt er gekeken naar de laagste grenswaarde. In dit geval gaat het over de de grenswaarden die gelden voor de blootstelling aan CO over een hele werkdag (8 uur). De minimale grenswaarde komt voort uit de Wereldgezondheidsorganisatie (Engels: World Health Organization, WHO) en bedraagt deze 10 \textit{ppm} als tijdgewogen gemiddelde over de hele werkdag. Om de grenswaarden goed te kunnen detecteren willen wij een gevoeligheid van maximaal 20\% van de laagte grenswaarde, in dit geval dus een gevoeligheid van 2 \textit{ppm} of lager en het detectie limit van de sensor bedraagt dan ook 2 \textit{ppm}. Aangezien CO een gas is, wordt er rekening gehouden met de optie dat de keuze uiteindelijk valt op het ontwikkelen van en elektro-chemische sensor. Dit type sensoren hebben vaak een bepaalde responstijd, deze mag niet groter zijn dan de sampletijd. Ook hier wordt er weer gekeken naar de minimale grenswaarde. De grenswaarden worden altijd gepresenteerd als een gemiddelde concentratie over tijd (een tijdgewogen gemiddelde), ook wel de duur van blootstelling aan een bepaalde concentratie CO. Binnen deze minimale blootstellingsduur moeten er minimaal 5 metingen zijn gedaan om een goed tijdgewogen gemiddelde te bepalen. De minimale blootstellingsduur die wordt omschreven door het RIVM bedraagt 15 minuten (voor een concentratie van 90 \textit{ppm}), wat dus een sampletijd van 3 minuten bedraagt. Dit betekend dat de responstijd van de sensor maximaal 3 minuten mag zijn. Bij het ontwikkelen van deze sensor modules wordt er gewerkt met het HvA-Xmega-Board. Deze heeft een spanningsregulator die een stabiele spanning van 3,3 V afgeeft \cite{xmega}, Daarom is het wenselijk als de sensor module een voedspanning heeft van zo'n 2,7 V tot 3,3 V.
-
-\section{Specificaties}
-\begin{center}
-	\begin{tabular}{ | m{5cm} | m{5cm}| } 
-		\hline
-		\multicolumn{2}{|c|}{Specificaties voor de implementaties van CO sensoren} \\
-		\hline
-		Meet bereik a: & 0 - 1000 \textit{ppm} \\
-		\hline
-		detectie limiet:  & <2 \textit{ppm}
-		\\ 
-		\hline
-		detectie resolutie: & 2 \textit{ppm} 
-		\\ 
-		\hline
-		response tijd: & < 3 minuut
-		\\ 
-		\hline
-		Voed spanning: & min: 2,7V max: 3,3V
-		\\ 
-		\hline
-		Maximaal vermogen: & 1 mW
-		\\
-		\hline
-		Output gevoeligheid: & 1mV/\textit{ppm}
-		\\
-		\hline
-	\end{tabular}
-\end{center}
-
-\newpage
-\appendix
-\section{Appendix A: NOx onderzoek}
-Stikstofoxides zijn verbindingen tussen stikstof en zuurstof in de vormen $NO$ en $NO_2$. Stikstofdioxide ($NO_2$) komt vrij bij de verbranding van fossielen brandstoffen. In Nederland zijn de grootste uitstoters van $NO_x$ het verkeer en de elektriciteitscentrales.  De uitstoot van $NO_2$ heeft gevolgen voor de natuur en de gezondheid. $NO_2$ word dan ook vaak gebruikt als indicator van de luchtkwaliteit.
-
-\subsection{Effecten van NOx}
-Stikstofoxide levert een bijdrage aan de vorming van zure regen. Blootstelling aan $NO_2$ hangt samen met luchtwegklachten zoals verminderende longfunctie, astma-aanvallen en infecties. $NO$ daarin tegen heeft weinig gezondheidseffecten \cite{NO2_Amsterdam}. 
-
-
-\subsubsection{Normen}
-De norm voor het jaargemiddelde $NO_2$ is 	$40\,\nicefrac{\mu g}{m^{3}}$. Deze norm wordt lokaal enkele keren per jaar overschreden. Omdat het verkeer veel $NO_2$ uitstoot, geld een maximaal toegestaan uurgemiddelde van $200\,\nicefrac{\mu g}{m^{3}}$ voor wegen waar meer dan 40.000 motorvoertuigen per etmaal gebruik van maken.
-
-\begin{center}
-	\begin{tabular}{ | m{5cm} | m{5cm}| } 
-		\hline
-		Soort norm & Concentratie \\
-		\hline
-		Jaargmiddelde & $40\,\nicefrac{\mu g}{m^{3}}$
-		\\ 
-		\hline
-		Uurgemiddelde & $200\,\nicefrac{\mu g}{m^{3}}$* 
-		\\ 
-		\hline
-	\end{tabular}
-\end{center}
-
-\begin{footnotesize} 
-	* Van toepassing voor wegen waarvan ten minste 40.000 motorvoertuigen per etmaal gebruik maken.
-\end{footnotesize}
-
-De gemiddelde concentratie $NO_2$ in de Amsterdamse buitenlucht ligt rond de $25\,\nicefrac{\mu g}{m^{3}}$ (13 ppb). De concentraties binnen liggen meestal een factor 2 lager dan buiten. 
-
-\begin{figure}
-	\centering
-	\includegraphics[width=.9\linewidth]{afbeeldingen/amsterdam.png}
-	\caption{Meetwaardes $NO_2$ Kantershof Amsterdam zuidoost. 6 tot 11 september 2019 \cite{grafiek}}
-	\label{fig:grafiek}
-\end{figure}
-
-\newpage
-\subsubsection{Sensoren}
-Om de voorkomende niveau's te kunnen meten moet de gekozen sensor een meetbereik hebben tussen de 0 en de 40 ppb, met een resolutie van 1 ppb.\\
-De NO2-B43F $NO_2$ sensor is een chemoresistive sensor van Alphasense en lijkt de beste optie maar is niet geschikt.\\
-Deze sensor een meetbereik van 0 tot 20 ppm met een meetonzekerheid van 15 ppb. Deze sensor is niet gevoelig genoeg om de lage concentraties met een resolutie van 1 ppb uit de lucht goed te kunnen meten.\\ 
-Sensoren die $NO_2$ meten hebben een kruisgevoeligheid voor andere gassen zoals $O_3$ en zijn erg gevoelig voor veranderingen in temperatuur en luchtvochtigheid. \\
-De sensor moet energie zuinig zijn waardoor chemoresistive sensoren niet geschikt zijn omdat deze een continu verbruik is in de ordegrootte van 50 mW \cite{B4DF}. 
-
-\subsubsection{Conclusie}
-Er is geen sensor op de markt beschikbaar om de concentraties $NO_2$ die we verwachten te meten. De beschikbare sensoren zijn niet gevoelig genoeg en verbruiken te veel energie. Daarom is er voor gekozen om af te stappen van het meten van $NO_2$ als indicator van de luchtkwaliteit binnen de HvA gebouwen. Als alternatief is gekozen voor het meten van $CO$ concentraties in de lucht. $CO$ is een giftig gas en kan vrijkomen bij onvolledige verbrandingen en is daarom belangrijk om dit gas tijdig te registreren.
-%----------------------------------------------------------------------------------------
-\newpage
-\begin{thebibliography}{9}
-	\bibitem{Effecten Koolmonoxide}
-	Mariët Ticheler, 
-	2008 [Bekeken in september 2019],
-	[Rapport],
-	"Koolmonoxide",
-	Beschikbaar: \url{https://www.leefmilieu.nl/sites/www3.leefmilieu.nl/files/imported/pdf_s/MGM_2008-02_koolmonoxide.pdf}
+	\captionsetup[figure]{labelfont={bf},name={Fig},labelsep=period}
+	\captionsetup{justification=centering}
+	\renewcommand{\contentsname}{Inhoudsopgave}
+	\def\textsubscript#1{\ensuremath{_{\mbox{\textscale{.6}{#1}}}}}
+	\hypersetup{hidelinks=true}
+	\maketitle % Print the title section
 	
-	\bibitem{RIVM huurwoningen}
-	M. van Bruggen, J.T.M. Gram, E.L. Boels, L. Ruhaak, M. Mooij,
-	RIVM,
-	2009 [Bekeken in september 2019],
-	[Rapport],
-	"Koolmonoxide in huurwoningen in de Randstad",
-	Beschikbaar: \url{https://www.rivm.nl/bibliotheek/rapporten/609300009.pdf}
+	%----------------------------------------------------------------------------------------
+	%	ABSTRACT AND KEYWORDS
+	%----------------------------------------------------------------------------------------
 	
-	\bibitem{Blootstelling aan CO}
-	M. Mooij,
-	RIVM,
-	2008 [Bekeken in september 2019],
-	[Rapport],
-	"Chronische blootstelling aan koolmonoxide, tabel 2.2",
-	Beschikbaar: \url{https://www.rivm.nl/bibliotheek/rapporten/609300005.pdf}
+	%\renewcommand{\abstractname}{Summary} % Uncomment to change the name of the abstract to something else
 	
-	\bibitem{NO2_Amsterdam}
-	RIVM, J.p. Wesseling, S. van der Zee, P.L. Nguyen,
-	2008 [Bekeken in september 2019],
-	[Rapport],
-	"Gemeten en berekende NO2-concentraties in Amsterdam in 2008",
-	Beschikbaar: \url{https://www.rivm.nl/bibliotheek/rapporten/680705015.pdf}
 	
-	\bibitem{grafiek}
-	Rijksinstituut voor Volksgezondheid
-	2019[Bekeken in september 2019],
-	[Online],
-	"Meetgegevens NO2",
-	Beschikbaar: \url{https://www.luchtmeetnet.nl}
+	\vspace{10pt} % Some vertical space between the abstract and first section
 	
-	\bibitem{B4DF}
-	Alphasense
-	2018[Bekeken in september 2019],
-	[Datasheet],
-	"Datasheet",
-	Beschikbaar: \url{http://www.alphasense.com/WEB1213/wp-content/uploads/2018/12/NO2B43F.pdf}
+	%----------------------------------------------------------------------------------------
+	%	ESSAY BODY
+	%-----------------------------------------------
+	\newpage
+	\tableofcontents
+	\newpage
+	\section{Inleiding} \label{sec::Inleiding}
+	In dit verslag wordt de implementatie van een koolstofmonoxide sensor in een dynamisch sensornetwerk besproken voor het project: "Sensornetwerken". Het doel van dit project is om een low-power sensormodule te ontwikkelen die een grootheid met relatie tot de luchtkwaliteit meet en deze meetdata vervolgens deelt in een dynamisch draadloos sensornetwerk. De gekozen grootheid bedraagt in dit geval koolstofmonoxide (Hierna naar gerefereerd onder de scheikundige afkorting CO). In eerste instantie was er gekozen voor stikstofdioxide, de onderbouwing om van keuze te veranderen staat beschreven in appendix A. Allereerst zal er besproken worden wat voor grootheid CO is en waarom het meten hiervan nuttig is. Voor dit onderzoek wordt er gekeken naar de gebruikelijke concentraties, grenswaardes uitschieters van CO concentraties in professionele werkomgevingen (zoals kantoorpanden). Op basis van die informatie zullen de specificaties van de sensormodule worden opgesteld, die op hun beurt weer de basis vormen voor de gemaakte keuzen bij het ontwerp van de sensor. Verder wordt er ook nog een globale uitleg gegeven over de werking van het netwerk.
 	
-	\bibitem{xmega}
-	978-90-484-3527-2,
-	W. Dolman,
-	2016[Bekeken in september 2019],
-	[boek],
-	"De taal C en de Xmega (2e druk)",
-	Culemborg,
-	Free Musketeers uitgeverij en productie
-\end{thebibliography}
+	\section{Koolstofmonoxide} \label{sec::CO}
+	Koolstofmonoxide (CO) is een verbinding tussen koolstof en zuurstof. Het is een kleur- en geurloos gas. CO komt vrij bij een onvolledige verbranding. Dit kan erg gevaarlijk zijn voor de gezondheid omdat het gas je ongemerkt vergiftigt. Het word dan ook wel eens een "sluipmoordenaar" genoemd \cite{Effecten Koolmonoxide}. 
+	
+	\subsection{Ontstaan van CO} \label{subsec::ontstaan_CO}
+	Bij de verbranding van koolstofverbindingen ontstaat er normaal CO2. Als de verbranding onvolledig is, door bijvoorbeeld een tekort aan zuurstof, ontstaat er CO \cite{Effecten Koolmonoxide}. Een veel voorkomende oorzaak van CO productie zijn niet goed afgestelde of niet goed onderhouden gas kachels en cv-ketels \cite{RIVM huurwoningen}.
+	
+	\subsection{Effecten op gezondheid} \label{subsec::CO_gezondheid}
+	CO is erg gevaarlijk voor de mens omdat het geur en kleurloos is. Bij inademing van CO word de zuurstofopname verstoord. In plaats van zuurstof, bind de CO zich aan de rode bloedcellen. Omdat CO zich sterker hecht aan de rode bloedcellen dan zuurstof, word er minder zuurstof door het lichaam vervoerd. 
+	\\
+	De effecten van blootstelling aan CO zijn het gevolg van een zuurstoftekort in het bloed. Hoe meer CO er word opgenomen hoe minder zuurstof er kan worden opgenomen \cite{Effecten Koolmonoxide}. 
+	
+	\section{Algemene koolstofmonoxide concentraties} \label{sec::CO_concentraties}
+	Het RIVM heeft tussen april 2007 tot en met januari 2008 metingen gedaan in 1028 huishoudens. In 169 van de 1028 huishoudens werden werden er concentraties boven het detectie limiet van 1 \textit{parts per million} (hierna naar gerefereerd als \textit{ppm}) gevonden. In 8 huishoudens werden er waardes van tussen de 25 en 75 \textit{ppm}, dit waren de meest extreme waardes. in 10 andere huishoudens werden er waardes aangetroffen van tussen de 10 en 25 \textit{ppm} en in de rest van de huishoudens (verreweg de meesten) werden er waardes aangetroffen tussen de 1 en 9 \textit{ppm} \cite{RIVM huurwoningen}. Over een werkdag van 8 uur wordt een tijdgewogen gemiddelde concentratie van 25 \textit{ppm} als grenswaarde aangenomen, over 15 minuten is dit 150 \textit{ppm}. De advies waarden van de Wereldgezondheidsorganisatie (Engels: World Health Organization, WHO) zijn 10 \textit{ppm} als tijdgewogen gemiddelde over 8 uurl en 25 \textit{ppm} over 1 uur \cite{Blootstelling aan CO}.
+	
+	\subsection{Koolstofmonoxide concentraties in de HvA Leeuwenburg} \label{subsec::CO_HvA}
+	Om meer te weten te komen over de huidige manieren van meten van de koolstofmonoxide concentraties in het gebouw van de HvA faculteit techniek, is er contact gezocht het gebouwbeheer. Uit een klein gesprek is gebleken dat er momenteel alleen in de garage CO meters hangen, die wanneer er een bepaalde grenswaarde wordt overschreden (momenteel nog onbekend voor ons welke grenswaarde dat is) alarm slaan waarna vervolgens iedereen de garage moet verlaten.
+	
+	\section{Luchtkwaliteit meten} \label{subsec::lucht _kwaliteit_meten}
+	Zoals eerder werd besproken worden de te ontwikkelen sensor modules gebruikt om de luchtkwaliteit te meten. Hierbij wordt dus niet alleen bedoeld om een detector te maken die afgaat na het overschrijden van een bepaalde waarde, maar is het een doel om ook te kunnen meten wanneer je welke concentratie CO in de lucht hebt zitten en hoe ver deze concentratie ligt van de grenswaardes.\\
+	Om de gevoeligheid en detectielimit van de sensor te bepalen, wordt er gekeken naar de laagste grenswaarde. In dit geval gaat het over de de grenswaarden die gelden voor de blootstelling aan CO over een hele werkdag (8 uur). De minimale grenswaarde komt voort uit de Wereldgezondheidsorganisatie (Engels: World Health Organization, WHO) en bedraagt deze 10 \textit{ppm} als tijdgewogen gemiddelde over de hele werkdag. Om de grenswaarden goed te kunnen detecteren is er in groep 5 besloten dat een gevoeligheid van maximaal 20\% van de laagte grenswaarde, in dit geval dus een gevoeligheid van 2 \textit{ppm} of lager wenselijk is. Het detectie limit van de sensor bedraagt ook 2 \textit{ppm} \cite{Blootstelling aan CO}.\\
+	Aangezien CO een gas is, wordt er rekening gehouden met de optie dat de keuze uiteindelijk valt op het ontwikkelen van en elektro-chemische sensor. Dit type sensoren hebben vaak een bepaalde responstijd, deze mag niet groter zijn dan de sampletijd. Ook hier wordt er weer gekeken naar de minimale grenswaarde. De grenswaarden worden altijd gepresenteerd als een gemiddelde concentratie over tijd (een tijdgewogen gemiddelde), ook wel de duur van blootstelling aan een bepaalde concentratie CO. Binnen deze minimale blootstellingsduur moeten er minimaal 5 metingen zijn gedaan om een goed tijdgewogen gemiddelde te bepalen. De minimale blootstellingsduur die wordt omschreven door het RIVM bedraagt 15 minuten (voor een concentratie van 90 \textit{ppm}), wat dus een sampletijd van 3 minuten bedraagt. Dit betekend dat de responstijd van de sensor maximaal 3 minuten mag zijn \cite{Blootstelling aan CO}. \\
+	Bij het ontwikkelen van deze sensor modules wordt er gewerkt met het HvA-Xmega-Board. Deze heeft een spanningsregulator die een stabiele spanning van 3,3 V afgeeft \cite{xmega}, Daarom is het wenselijk als de sensor module een voedspanning heeft van zo'n 2,7 V tot 3,3 V.
+	
+	\section{Specificaties} \label{sec::specificaties}
+	In dit hoofdstuk wordt er een overzicht geboden van de specificaties waar de sensormodule aan moet voldoen. De specificaties zijn opgesteld volgens de redeneringen die in hoofdstuk \ref{sec::lucht _kwaliteit_meten} zijn gedaan.
+	\begin{center}
+		\begin{tabular}{ | m{5cm} | m{5cm}| } 
+			\hline
+			\multicolumn{2}{|c|}{Specificaties voor de implementaties van CO sensoren} \\
+			\hline
+			Meet bereik a: & 0 - 1000 \textit{ppm} \\
+			\hline
+			detectie limiet:  & <2 \textit{ppm}
+			\\ 
+			\hline
+			detectie resolutie: & 2 \textit{ppm} 
+			\\ 
+			\hline
+			response tijd: & < 3 minuut
+			\\ 
+			\hline
+			Voed spanning: & min: 2,7V max: 3,3V
+			\\ 
+			\hline
+			Maximaal vermogen: & 1 mW
+			\\
+			\hline
+			Output gevoeligheid: & 1mV/\textit{ppm}
+			\\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\section{Sensor technieken} \label{sec::sensor_technieken}
+	Er zijn verschillende technieken beschikbaar om CO te kunnen meten. In dit hoofdstuk worden de meest gebruikte technieken uitgelicht, wat in combinatie met de specificaties uit hoofdstuk \ref{sec::specificaties} de basis van de onderbouwing gaat vormen voor de keuze voor een van deze technieken.
+	
+	\subsection{Elektrochemische sensoren} \label{subsec::elektrochemische_sensoren}
+	Bij het meten van gassen wordt er vaak gebruik gemaakt van elektrochemische sensoren. elektrochemische sensoren detecteren gassen door een chemische reactie te veroorzaken tussen het gas en de zuurstof in de sensor. Deze reactie produceert een kleine stroom, die evenredig is met de concentratie van het aanwezige gas, in dit geval dus CO. Vaak hebben elektrochemische sensoren 2 elektroden die, wanneer ze gecombineerd worden, het detectieproces starten \cite{SGX Intro}.
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=.6\linewidth]{afbeeldingen/EC_sensor.png}
+		\caption{Overzicht van een elektrochemische sensor \cite{SGX Intro}}
+		\label{fig:EC_sensor}
+	\end{figure}
+	Zoals in figuur \ref{fig:EC_sensor} te zien is zit er een onderscheid tussen beide elektroden. Bij de \textit{sensing elektrode} reageert het doelgas (CO) met water. deze reactie veroorzaakt koolstofdioxide (CO\textsubscript{2}), waterstof ionen (H\textsubscript{+}) en 2 elektronen bij de \textit{counter elektrode}. Bij de \textit{counter elektrode} reageert zuurstof(O\textsubscript{2}) met de waterstof ionen en de elektronen (e\textsuperscript{-}) tot water \cite{SGX Intro}.
+	\begin{center}
+		\textit{sensing elektrode:}\\
+		CO + H\textsubscript{2}O $\rightarrow$ CO\textsubscript{2} + 2H\textsubscript{+} + 2 e\textsuperscript{-} 
+		\bigskip
+		
+		\textit{counter elektrode:}\\
+		$\frac{1}{2}$O\textsubscript{2} + 2H\textsubscript{+} + 2 e\textsuperscript{-} $\rightarrow$ H\textsubscript{2}O
+		\bigskip
+		
+		\textit{totaal:}\\
+		CO + $\frac{1}{2}$O\textsubscript{2} $\rightarrow$ CO\textsubscript{2}	
+	\end{center}
+	\newpage
+	Voor maximale efficiëntie van de sensor is het wenselijk dat er geen spanningsverschil zit tussen bij elektroden. Wanneer er gereageerd wordt met het gas (CO) ontstaat er een spanning bij de \textit{sensing elektrode}. Door een \textit{referentie elektrode} te verbinden met de \textit{sensing elektrode} wordt de spanningsverandering voorkomen \cite{SGX Intro}.\\
+	Verder moet er bij elektrochemische sensoren altijd rekening worden gehouden met kruisgevoeligheid voor andere gassen. Over het algemeen staat hier in de datasheets van de sensoren zelf meer informatie over dit onderwerp. Verder is het belangrijk om de effecten van temperatuurverandering zo veel mogelijk te minimaliseren, hiervoor moet de temperatuur bij de sensor bekend zijn. Om de elektrochemische sensor te optimaliseren is er een \textit{referentie elektrode} en een thermometer nodig \cite{SGX Intro}.
+	%----------------------------------------------------------------------------------------
+	% APPENDIX
+	%----------------------------------------------------------------------------------------
+	\newpage
+	\appendix
+	\section{Appendix A: NOx onderzoek}
+	Stikstofoxides zijn verbindingen tussen stikstof en zuurstof in de vormen $NO$ en $NO_2$. Stikstofdioxide ($NO_2$) komt vrij bij de verbranding van fossielen brandstoffen. In Nederland zijn de grootste uitstoters van $NO_x$ het verkeer en de elektriciteitscentrales.  De uitstoot van $NO_2$ heeft gevolgen voor de natuur en de gezondheid. $NO_2$ word dan ook vaak gebruikt als indicator van de luchtkwaliteit.
+	
+	\subsection{Effecten van NOx}
+	Stikstofoxide levert een bijdrage aan de vorming van zure regen. Blootstelling aan $NO_2$ hangt samen met luchtwegklachten zoals verminderende longfunctie, astma-aanvallen en infecties. $NO$ daarin tegen heeft weinig gezondheidseffecten \cite{NO2_Amsterdam}. 
+	
+	
+	\subsubsection{Normen}
+	De norm voor het jaargemiddelde $NO_2$ is 	$40\,\nicefrac{\mu g}{m^{3}}$. Deze norm wordt lokaal enkele keren per jaar overschreden. Omdat het verkeer veel $NO_2$ uitstoot, geld een maximaal toegestaan uurgemiddelde van $200\,\nicefrac{\mu g}{m^{3}}$ voor wegen waar meer dan 40.000 motorvoertuigen per etmaal gebruik van maken.
+	
+	\begin{center}
+		\begin{tabular}{ | m{5cm} | m{5cm}| } 
+			\hline
+			Soort norm & Concentratie \\
+			\hline
+			Jaargmiddelde & $40\,\nicefrac{\mu g}{m^{3}}$
+			\\ 
+			\hline
+			Uurgemiddelde & $200\,\nicefrac{\mu g}{m^{3}}$* 
+			\\ 
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\begin{footnotesize} 
+		* Van toepassing voor wegen waarvan ten minste 40.000 motorvoertuigen per etmaal gebruik maken.
+	\end{footnotesize}
+	
+	De gemiddelde concentratie $NO_2$ in de Amsterdamse buitenlucht ligt rond de $25\,\nicefrac{\mu g}{m^{3}}$ (13 ppb). De concentraties binnen liggen meestal een factor 2 lager dan buiten. 
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=.9\linewidth]{afbeeldingen/amsterdam.png}
+		\caption{Meetwaardes $NO_2$ Kantershof Amsterdam zuidoost. 6 tot 11 september 2019 \cite{grafiek}}
+		\label{fig:grafiek}
+	\end{figure}
+	
+	\newpage
+	\subsubsection{Sensoren}
+	Om de voorkomende niveau's te kunnen meten moet de gekozen sensor een meetbereik hebben tussen de 0 en de 40 ppb, met een resolutie van 1 ppb.\\
+	De NO2-B43F $NO_2$ sensor is een chemoresistive sensor van Alphasense en lijkt de beste optie maar is niet geschikt.\\
+	Deze sensor een meetbereik van 0 tot 20 ppm met een meetonzekerheid van 15 ppb. Deze sensor is niet gevoelig genoeg om de lage concentraties met een resolutie van 1 ppb uit de lucht goed te kunnen meten.\\ 
+	Sensoren die $NO_2$ meten hebben een kruisgevoeligheid voor andere gassen zoals $O_3$ en zijn erg gevoelig voor veranderingen in temperatuur en luchtvochtigheid. \\
+	De sensor moet energie zuinig zijn waardoor chemoresistive sensoren niet geschikt zijn omdat deze een continu verbruik is in de ordegrootte van 50 mW \cite{B4DF}. 
+	
+	\subsubsection{Conclusie}
+	Er is geen sensor op de markt beschikbaar om de concentraties $NO_2$ die we verwachten te meten. De beschikbare sensoren zijn niet gevoelig genoeg en verbruiken te veel energie. Daarom is er voor gekozen om af te stappen van het meten van $NO_2$ als indicator van de luchtkwaliteit binnen de HvA gebouwen. Als alternatief is gekozen voor het meten van $CO$ concentraties in de lucht. $CO$ is een giftig gas en kan vrijkomen bij onvolledige verbrandingen en is daarom belangrijk om dit gas tijdig te registreren.
+	%----------------------------------------------------------------------------------------
+	\newpage
+	\begin{thebibliography}{9}
+		\bibitem{Effecten Koolmonoxide}
+		Mariët Ticheler, 
+		2008 [Bekeken in september 2019],
+		[Rapport],
+		"Koolmonoxide",
+		Beschikbaar: \url{https://www.leefmilieu.nl/sites/www3.leefmilieu.nl/files/imported/pdf_s/MGM_2008-02_koolmonoxide.pdf}
+		
+		\bibitem{RIVM huurwoningen}
+		M. van Bruggen, J.T.M. Gram, E.L. Boels, L. Ruhaak, M. Mooij,
+		RIVM,
+		2009 [Bekeken in september 2019],
+		[Rapport],
+		"Koolmonoxide in huurwoningen in de Randstad",
+		Beschikbaar: \url{https://www.rivm.nl/bibliotheek/rapporten/609300009.pdf}
+		
+		\bibitem{Blootstelling aan CO}
+		M. Mooij,
+		RIVM,
+		2008 [Bekeken in september 2019],
+		[Rapport],
+		"Chronische blootstelling aan koolmonoxide, tabel 2.2",
+		Beschikbaar: \url{https://www.rivm.nl/bibliotheek/rapporten/609300005.pdf}
+		
+		\bibitem{NO2_Amsterdam}
+		RIVM, J.p. Wesseling, S. van der Zee, P.L. Nguyen,
+		2008 [Bekeken in september 2019],
+		[Rapport],
+		"Gemeten en berekende NO2-concentraties in Amsterdam in 2008",
+		Beschikbaar: \url{https://www.rivm.nl/bibliotheek/rapporten/680705015.pdf}
+		
+		\bibitem{grafiek}
+		Rijksinstituut voor Volksgezondheid
+		2019[Bekeken in september 2019],
+		[Online],
+		"Meetgegevens NO2",
+		Beschikbaar: \url{https://www.luchtmeetnet.nl}
+		
+		\bibitem{B4DF}
+		Alphasense
+		2018[Bekeken in september 2019],
+		[Datasheet],
+		"Datasheet",
+		Beschikbaar: \url{http://www.alphasense.com/WEB1213/wp-content/uploads/2018/12/NO2B43F.pdf}
+		
+		\bibitem{xmega}
+		978-90-484-3527-2,
+		W. Dolman,
+		2016[Bekeken in september 2019],
+		[boek],
+		"De taal C en de Xmega (2e druk)",
+		Culemborg,
+		Free Musketeers uitgeverij en productie
+		
+		\bibitem{SGX Intro}
+		SGX Sensortech,
+		01-02-2007 [Bekeken in oktober 2019],
+		[Online],
+		"Introduction to Electrochemical (EC) Gas Sensors",
+		Beschikbaar: \url{https://www.sgxsensortech.com/content/uploads/2014/08/Introduction-to-Electrochemical-EC-Gas-Sensors1.pdf}
+		
+	\end{thebibliography}
 \end{document}
