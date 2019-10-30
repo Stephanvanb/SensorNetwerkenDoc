@@ -1,7 +1,7 @@
 \documentclass[a4paper, 11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
-\usepackage{fancyvrb} 
+\usepackage{fancyvrb}
 \usepackage{siunitx}
 \usepackage[table, xcdraw, svgnames]{xcolor}
 \usepackage{listings, lstautogobble}
@@ -25,12 +25,12 @@
 \section{Inleiding}
 Dit document beschrijft de software implementaties van groep 5 voor het vak "Sensornetwerk Ontwerp" aan de Hogeschool van Amsterdam.
 
-Het doel van de opdracht is om een dynamisch netwerk van sensornodes te maken, waarbij in dit document de nadruk ligt op de algemene netwerkstructuur en de implementatie in MCU van de sensornodes. Hiervoor geldt over het algemeen dat het stuk software wat in dit document beschreven wordt gelijk is voor alle sensornodes. Tijdens de ontwikkeling van de individuele sensorimplementaties (vak "Sensormodule Ontwerp") kan de code afhankelijk per node worden aangepast. 
+Het doel van de opdracht is om een dynamisch netwerk van sensornodes te maken, waarbij in dit document de nadruk ligt op de algemene netwerkstructuur en de implementatie in MCU van de sensornodes. Hiervoor geldt over het algemeen dat het stuk software wat in dit document beschreven wordt gelijk is voor alle sensornodes. Tijdens de ontwikkeling van de individuele sensorimplementaties (vak "Sensormodule Ontwerp") kan de code afhankelijk per node worden aangepast.
 
 Het doel van dit document is om een 'proof of concept' te geven van de algemene netwerkstuctuur waar de sensornodes tijdens het vak "Sensormodule Ontwerp" gebruik van zullen maken.
 
 \section{Algemene Node Programma}
-Zoals besproken in de inleiding van dit document het grootste deel van de programma code voor de node MCU's gelijk. In dit hoofdstuk wordt deze code besproken. 
+Zoals besproken in de inleiding van dit document het grootste deel van de programma code voor de node MCU's gelijk. In dit hoofdstuk wordt deze code besproken.
 
 \subsection{Routing}
 Het is belangrijk dat het sensornetwerk dynamisch is. Dit wil zeggen dat het netwerk waarover de sensordata verstuurd wordt op ieder willekeurig moment kan veranderen. In de praktijk gebeurd dit wanneer de draadloze sensornodes van plaats veranderen of om welke reden dan ook stopt met communiceren.\\
@@ -72,7 +72,7 @@ Node 6 & 1 & 3 & 2 & 3 & 4 & 0 \\
 Om de algemene node-code inzichtelijk te maken is gebruik gemaakt van een flowchart. In figuur~\ref{fig:flowchart} is deze flowchart te zien.
 
 \begin{figure}[!h]
-	\centering	
+	\centering
 	\includegraphics[width=.5\textwidth, keepaspectratio]{media/Pflow.pdf}
     \caption{Nadat de node opgestart is (Boot), wordt de MCU geïnitialiseerd in het blok [Initialize].\\
      \textbf{Figuur dient in deze versie als voorbeeld en zal geüpdatet worden wanneer het basisontwerp af is.}}
@@ -92,9 +92,47 @@ Een groot gedeelte van de tijd is de MCU is aan het wachten op berichten om deze
 %Zie GLO
 
 \section{Basisstation}
+Het basisstation heeft als doel het weergeven en opslaan van sensor metingen en het tonen van de luchtkwaliteit.
+Voor het basisstation word er gebruik gemaakt van een Raspberry Pi 3B+ in combinatie met een multi-touch display. Aan het basisstation is, via een usb verbinding, een sensornode aangesloten om zo het basisstation op het nemen in het netwerk.
+Om informatie te tonen op het display word er gebruik gemaakt van de programmeer librery \textsl{Ncurses}. Hiermee is een tekst gebaseerde GUI gemaakt.
+
+\subsection{Flowchart}
+In het flowchart \ref{fig:basisstation} is te zien dat na het opstarten er steeds gekeken word of er data binnenkomt. Als er data binnenkomt kan dit vallen in een van de volgende drie categorieën; sensor data, routing table of debug data. Afhankelijk van het type data word deze op het scherm getoond en eventueel in een log-bestand opgeslagen.
+
+\begin{figure}[!ht]
+\begin{center}
+	\includegraphics[width=.7\textwidth, keepaspectratio]{media/basisstation_software.pdf}
+    \caption{Dataflow basisstation}
+    \label{fig:basisstation}
+\end{center}
+\end{figure}
+
+\subsection{Comunicatie met het basisstation}
+De sensornode kan via de UART, over USB, data naar de Raspberry Pi sturen. De sensor en routing table data word binair naar de RPi gestuurd. De debug data kan als ASCII worden verstuurd en word direct als tekst op het scherm geprint.
+
+De datapakketen worden in het volgende formaat verstuurd; Byte 0 geeft het type pakket aan; Byte 1 geeft aan hoe groot het pakket is; Vanaf byte 2 begint de data.
+
+\begin{center}
+Syntax pakket: [Type pakket, Pakket lengte, Data 0, Data 1, ...]
+\end{center}
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\rowcolor[HTML]{EFEFEF}
+\textbf{Pakket ID} & \textbf{Type bericht} \\ \hline
+0x21               & Sensor data           \\ \hline
+0x63               & Routing table         \\ \hline
+\end{tabular}
+\caption{Start bytes datapakketten}
+\label{tab:datapakket_pi}
+\end{table}
+
+Om de verschillende typen datapakketten van elkaar te onderscheiden word met de eerste byte aangegeven welk type datapakket er verstuurd word, zie tabel \ref{tab:datapakket_pi}. Als een datapakket niet met begint met een geldig pakket ID dan word de data aangezien als debug data. 
 
 \section{ISO groep}
-Om te zorgen dat de nodes van de verschillende groepen elkaars datapaketten kunnen interpreteren en doorsturen zijn er afspraken gemaakt tussen de 5 groepen. Elke groep leverde 1 afgevaardigde, de 5 afgevaardigden vormden de ISO groep. De afspraken die de ISO-groep gemaakt heeft zijn opgesteld in\cite{ISO}. 
+Om te zorgen dat de nodes van de verschillende groepen elkaars datapaketten kunnen interpreteren en doorsturen zijn er afspraken gemaakt tussen de 5 groepen. Elke groep leverde 1 afgevaardigde, de 5 afgevaardigden vormden de ISO groep. De afspraken die de ISO-groep gemaakt heeft zijn opgesteld in\cite{ISO}.
 
 Naast afspraken over de algemene NRF-instellingen zijn er ook afspraken gemaakt over de berichttypes en de bijbehorende headers.
 
@@ -104,7 +142,7 @@ Bericht headers staan in de onderstaande tabel.
 \begin{table}[!ht]
 \begin{tabular}{|l|l|l|}
 \hline
-\rowcolor[HTML]{EFEFEF} 
+\rowcolor[HTML]{EFEFEF}
 Mask & Description           & Pipe \\ \hline
 0x1  & ID Broadcast          & 0    \\ \hline
 0x2  & Routine Routing Table & 1    \\ \hline
@@ -118,7 +156,7 @@ Om te bewijzen dat het sensornetwerk waar de modules via zullen opereren werkt, 
 \subsection{Routing Test}
 TODO: Beschrijf een test voor het opzetten van een routing tabel met meerdere nodes.
 \subsection{Basis Station test}
-TODO: Beschrijf een test voor het testen van het Basisstation dat data ontvangt van meerdere nodes. 
+TODO: Beschrijf een test voor het testen van het Basisstation dat data ontvangt van meerdere nodes.
 \subsection{Demonstratie}
 TODO: Beschrijf de demonstratie (oplevering blok 1).
 
@@ -140,7 +178,7 @@ In tabel \ref{Situaties} is een overzicht te zien van alle situaties die een bel
 \begin{table}[ht]
 	\centering
 	\caption{invloedrijke situaties voor het netwerk en de verwachtte reacties}
-	\begin{tabular}{ | m{6cm} | m{6cm}| } 
+	\begin{tabular}{ | m{6cm} | m{6cm}| }
 		\hline
 		\textbf{Situatie:} & \textbf{Verwachting:} \\
 		\hline
@@ -151,18 +189,18 @@ In tabel \ref{Situaties} is een overzicht te zien van alle situaties die een bel
 		\\
 		\hline
 		Sensormodule valt opeens uit  & De sensormodule zal na een bepaalde tijd verwijderd worden uit de burenlijsten en zal in de routingtable bij het basis station als inactief worden gesteld
-		\\ 
+		\\
 		\hline
 		Sensormodule stuurt onzin data over het netwerk & Aangezien het deze berichten waarschijnlijk niet aan de ISO-standaarden voldoen zullen deze niet worden doorgestuurd of opgenomen door het basisstation
-		\\ 
+		\\
 		\hline
 		Signalen van een sensormodule worden opeens geblokkeerd & in principe hetzelfde als wanneer een sensormodule uitvalt. Verder zal de sensormodule na een bepaalde tijd alle buren uit de burenlijst verwijderen aangezien het ook geen berichten meer ontvangt
-		\\ 
+		\\
 		\hline
 		Sensormodule is niet direct verbonden met het basis station maar wel met andere sensormodules & De sensormodule zal proberen via andere sensormodules zijn data bij het basis station terecht te krijgen.
 		\\
 		\hline
-	\end{tabular} 
+	\end{tabular}
 	\label{Situaties}
 \end{table}
 
@@ -201,7 +239,7 @@ Voor het testen van deze situatie waren alle nodes verbonden met elkaar. De debu
 In figuur \ref{NodeValtUit} is te zien hoe het basisstation van alle 4 andere sensormodules (51, 53. 77, 83). Bij alle ontvangen berichten is de 2e byte het ID van de sensormodule, door te kijken van welk ID alle andere berichten komen is vast te stellen dat alle andere 4 sensormodules actief zijn. Uiteindelijk wordt sensormodule 52 verwijderd uit de burenlijst van het basisstation, omdat deze inactief is.
 
 \subsection{Signalen sensormodule geblokkeerd}
-Het testen van deze situatie was vergelijkbaar met die van paragraaf \ref{ValtUit}, echter i.p.v. dat sensormodule 52 van de voeding werd afgesloten, werd deze in een metalen kistje gestopt, zie figuur \ref{kistje}. 
+Het testen van deze situatie was vergelijkbaar met die van paragraaf \ref{ValtUit}, echter i.p.v. dat sensormodule 52 van de voeding werd afgesloten, werd deze in een metalen kistje gestopt, zie figuur \ref{kistje}.
 \newpage
 \begin{figure}[h!p]
 	\centering
@@ -236,10 +274,10 @@ In figuur \ref{Doorsturen83} is te zien hoe sensormodule 52 door 83 gezien wordt
 	\includegraphics[width=5cm]{TestResults/DataViaBuur/DataRecevied105.png}
 	\caption{basisstation ontvangt doorgestuurde data via 83} \label{Doorsturen105}
 \end{figure}
-In figuur \ref{Doorsturen105} is te zien hoe het basisstation de sensordata van sensormodule 52 ontvangt, terwijl het via sensormodule 83 is doorgestuurd. Zie hiervoor het blauwe bericht wat met 0x03 begint. Zoals bij alle andere berichten is de 2e byte het ID waar het bericht origineel vandaan komt, hieraan is te zien dat het bericht van sensormodule 52 komt. 
+In figuur \ref{Doorsturen105} is te zien hoe het basisstation de sensordata van sensormodule 52 ontvangt, terwijl het via sensormodule 83 is doorgestuurd. Zie hiervoor het blauwe bericht wat met 0x03 begint. Zoals bij alle andere berichten is de 2e byte het ID waar het bericht origineel vandaan komt, hieraan is te zien dat het bericht van sensormodule 52 komt.
 \newpage
 \bibliographystyle{ieeetr}
 
-\bibliography{POCbronnen} 
+\bibliography{POCbronnen}
 
 \end{document}
