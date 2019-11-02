@@ -37,6 +37,7 @@
 \usepackage[font=small]{caption}
 \usepackage{units}
 \usepackage{relsize}
+\usepackage{gensymb}
 
 \linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
 
@@ -107,7 +108,7 @@
 	Bij de verbranding van koolstofverbindingen ontstaat er normaal CO2. Als de verbranding onvolledig is, door bijvoorbeeld een tekort aan zuurstof, ontstaat er CO \cite{Effecten Koolmonoxide}. Een veel voorkomende oorzaak van CO productie zijn niet goed afgestelde of niet goed onderhouden gas kachels en cv-ketels \cite{RIVM huurwoningen}.
 	
 	\subsection{Effecten op gezondheid} \label{subsec::CO_gezondheid}
-	CO is erg gevaarlijk voor de mens omdat het geur en kleurloos is. Bij inademing van CO word de zuurstofopname verstoord. In plaats van zuurstof, bind de CO zich aan de rode bloedcellen. Omdat CO zich sterker hecht aan de rode bloedcellen dan zuurstof, word er minder zuurstof door het lichaam vervoerd. 
+	CO is gevaarlijk voor de mens omdat het geur en kleurloos is en bij inademing van CO word de zuurstofopname verstoord. In plaats van zuurstof, bind de CO zich aan de rode bloedcellen. Omdat CO zich sterker hecht aan de rode bloedcellen dan zuurstof, word er minder zuurstof door het lichaam vervoerd. 
 	\\
 	De effecten van blootstelling aan CO zijn het gevolg van een zuurstoftekort in het bloed. Hoe meer CO er word opgenomen hoe minder zuurstof er kan worden opgenomen \cite{Effecten Koolmonoxide}. 
 	
@@ -124,13 +125,13 @@
 	Bij het ontwikkelen van deze sensor modules wordt er gewerkt met het HvA-Xmega-Board. Deze heeft een spanningsregulator die een stabiele spanning van 3,3 V afgeeft \cite{xmega}, Daarom is het wenselijk als de sensor module een voedspanning heeft van zo'n 2,7 V tot 3,3 V.
 	
 	\section{Specificaties} \label{sec::specificaties}
-	In dit hoofdstuk wordt er een overzicht geboden van de specificaties waar de sensormodule aan moet voldoen. De specificaties zijn opgesteld volgens de redeneringen die in hoofdstuk \ref{sec::lucht _kwaliteit_meten} zijn gedaan.
+	In dit hoofdstuk wordt er een overzicht geboden van de specificaties waar de sensormodule aan moet voldoen. De specificaties zijn opgesteld volgens de redeneringen die in hoofdstuk \ref{subsec::lucht _kwaliteit_meten} zijn gedaan.
 	\begin{center}
 		\begin{tabular}{ | m{5cm} | m{5cm}| } 
 			\hline
 			\multicolumn{2}{|c|}{Specificaties voor de implementaties van CO sensoren} \\
 			\hline
-			Meet bereik a: & 0 - 1000 \textit{ppm} \\
+			Meetbereik a: & 0 - 200 \textit{ppm} \\
 			\hline
 			detectie limiet:  & <2 \textit{ppm}
 			\\ 
@@ -138,7 +139,7 @@
 			detectie resolutie: & 2 \textit{ppm} 
 			\\ 
 			\hline
-			response tijd: & < 3 minuut
+			responstijd: & < 3 minuut
 			\\ 
 			\hline
 			Voed spanning: & min: 2,7V max: 3,3V
@@ -180,6 +181,26 @@
 	\newpage
 	Voor maximale efficiëntie van de sensor is het wenselijk dat er geen spanningsverschil zit tussen bij elektroden. Wanneer er gereageerd wordt met het gas (CO) ontstaat er een spanning bij de \textit{sensing elektrode}. Door een \textit{referentie elektrode} te verbinden met de \textit{sensing elektrode} wordt de spanningsverandering voorkomen \cite{SGX Intro}.\\
 	Verder moet er bij elektrochemische sensoren altijd rekening worden gehouden met kruisgevoeligheid voor andere gassen. Over het algemeen staat hier in de datasheets van de sensoren zelf meer informatie over dit onderwerp. Verder is het belangrijk om de effecten van temperatuurverandering zo veel mogelijk te minimaliseren, hiervoor moet de temperatuur bij de sensor bekend zijn. Om de elektrochemische sensor te optimaliseren is er een \textit{referentie elektrode} en een thermometer nodig \cite{SGX Intro}.
+	
+	\subsection{Metaaloxide sensoren} \label{subsec::Metaal_oxide}
+	Een andere techniek om gassen te detecteren zijn sensoren gebaseerd op metaaloxide halfgeleiders (metaaloxide sensoren). Bij temperaturen tussen de 150 en 400 \degree Celsius wordt er zuurstof geabsorbeerd bij het oppervlak van de metaaloxiden door elektronen af te vangen. Als gevolg hiervan zal de weerstand van de sensor verhogen in het geval van n-type materialen en verlagen in het geval van p-type materialen. Op zijn beurt zal het gas wat gemeten moet worden reageren met het opgenomen zuurstof of de oxiden. Ook dit zal de weerstand van de sensor veranderen, waarbij de verandering van de weerstand correleert met de concentratie van het te meten gas \cite{MO sensoren}.
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=.7\linewidth]{afbeeldingen/MO_sensor.png}
+		\caption{Overzicht van de werking van een metaaloxide sensor \cite{MO sensoren}}
+		\label{fig:MO_sensor}
+	\end{figure}
+
+	\subsection{Sensor keuze} \label{subsec::Sensor_keuze}
+	Voor de keuze van een sensor techniek moet rekening gehouden worden de specificaties die in hoofdstuk \ref{sec::specificaties} en omschrijving van het eindproduct die beschreven staat in \ref{sec::Inleiding}. De sensor moet bij voorkeur zo min mogelijk energie verbruiken. Met beide sensor technieken zijn de specificaties wat betreft de gevoeligheid en responstijd te halen \cite{Sensor keuze}. Bij het energieverbruik van elektrochemische sensoren kan worden gedacht aan een vermogen van microwatt, waarmee die aan de specificaties wat betreft energieverbruik voldoen. Omdat metaaloxide sensoren werken op de temperaturen die staan beschreven in paragraaf \ref{subsec::Metaal_oxide} is er een verwarmingselement nodig om gassen te kunnen detecteren, wat een negatief effect heeft op het energieverbruik. Om die rede voldoen metaaloxide sensoren niet aan die specificaties die gaan over het energieverbruik van de sensormodule \cite{MO sensoren} \cite{Sensor keuze}.\\
+	Om die rede wordt er gekozen om bij het ontwerp van de sensormodule een elektrochemische sensor te implementeren.
+	
+	\section{Ontwerpkeuzes} \label{sec::Ontwerpkeuzes}
+	In dit hoofdstuk worden de ontwerpkeuzes besproken en onderbouwd voor het realiseren van een sensormodule die voldoet aan de omschrijving van het eindproduct uit hoofdstuk \ref{sec::Inleiding} en de specificaties uit hoofdstuk \ref{sec::specificaties}.
+	
+	\subsection{Globaal overzicht van de sensormodule}
+	\label{subsec::Globaal_Overzicht}
+	Zoals staat beschreven in paragraaf \ref{subsec::Sensor_keuze} is er gekozen om CO te meten met een elektrochemische sensor. Voor een optimaal gebruik van elektrochemische sensor moet de temperatuur bekend zijn, hiervoor is er een thermometer nodig. Ook zal er enige analoge signaalverwerking nodig zijn voordat om de CO sensor bruikbaar te maken. Aangezien meting uiteindelijk gedeeld moeten worden in een draadloos dynamisch sensornetwerk, dit gebeurt d.m.v. een microcontroller (de Xmega). Om deze rede moet het analoge signaal van de sensor worden omgezet naar het digitale domein d.m.v. een ADC.
 	%----------------------------------------------------------------------------------------
 	% APPENDIX
 	%----------------------------------------------------------------------------------------
@@ -294,6 +315,25 @@
 		[Online],
 		"Introduction to Electrochemical (EC) Gas Sensors",
 		Beschikbaar: \url{https://www.sgxsensortech.com/content/uploads/2014/08/Introduction-to-Electrochemical-EC-Gas-Sensors1.pdf}
+		
+		\bibitem{MO sensoren}
+		N. Barsan, U. Weimar,
+		Institute of Physical and Theoretical Chemistry, University of Tuebingen,
+		[Bekeken in september 2019],
+		[Artikel],
+		"Fundamentals of Metal Oxide Gas Sensors",
+		Beschikbaar: \url{https://www.google.com/url?sa=t\&rct=j\&q=&esrc=s\&source=web\&cd=9\&ved=2ahUKEwjDwY__icTlAhVGJFAKHceND0gQFjAIegQIABAC\&url=https%3A%2F%2Fwww.ama-science.org%2Fproceedings%2FgetFile%2FBGx1&usg=AOvVaw0HkmkgTDH_rmiX19YCcaHD}
+		
+		\newpage
+		\bibitem{Sensor keuze}
+		H. Li, X. Mu, Y. Yang, A. J. Mason,
+		IEEE,
+		2014 [Bekeken in september 2019],
+		[Artikel],
+		"Low power Multi-mode Electrochemical Gas
+		Sensor Array System for Wearable Health and
+		Safety Monitoring",
+		Beschikbaar: \url{https://ieeexplore.ieee.org/document/6851860}
 		
 	\end{thebibliography}
 \end{document}
