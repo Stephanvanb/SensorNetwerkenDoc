@@ -93,11 +93,11 @@ Een groot gedeelte van de tijd is de MCU is aan het wachten op berichten om deze
 
 \section{Basisstation}
 Het basisstation heeft als doel het weergeven en opslaan van sensor metingen en het tonen van de luchtkwaliteit.
-Voor het basisstation word er gebruik gemaakt van een Raspberry Pi 3B+ in combinatie met een multi-touch display. Aan het basisstation is, via een usb verbinding, een sensornode aangesloten om zo het basisstation op het nemen in het netwerk.
-Om informatie te tonen op het display word er gebruik gemaakt van de programmeer librery \textsl{Ncurses}. Hiermee is een tekst gebaseerde GUI gemaakt.
+Voor het basisstation wordt er gebruik gemaakt van een Raspberry Pi 3B+ in combinatie met een multi-touch display. Aan het basisstation is, via een USB verbinding, een sensornmodule aangesloten om zo het basisstation op het nemen in het netwerk.
+Om informatie te tonen op het display wordt er gebruik gemaakt van de programmeer library \textsl{Ncurses}. Hiermee is een op tekst gebaseerde grafische gebruikers interface (GUI) gemaakt.
 
 \subsection{Flowchart}
-In het flowchart \ref{fig:basisstation} is te zien dat na het opstarten er steeds gekeken word of er data binnenkomt. Als er data binnenkomt kan dit vallen in een van de volgende drie categorieën; sensor data, routing table of debug data. Afhankelijk van het type data word deze op het scherm getoond en eventueel in een log-bestand opgeslagen.
+In de flowchart \ref{fig:basisstation} is te zien dat na het opstarten er steeds gekeken wordt of er data binnenkomt. Als er data binnenkomt kan dit vallen in een van de volgende drie categorieën; sensor data, routing table of debug data. Afhankelijk van het type data wordt deze op het scherm getoont en eventueel in een log-bestand opgeslagen.
 
 \begin{figure}[!ht]
 \begin{center}
@@ -108,12 +108,12 @@ In het flowchart \ref{fig:basisstation} is te zien dat na het opstarten er steed
 \end{figure}
 
 \subsection{Comunicatie met het basisstation}
-De sensornode kan via de UART, over USB, data naar de Raspberry Pi sturen. De sensor en routing table data word binair naar de RPi gestuurd. De debug data kan als ASCII worden verstuurd en word direct als tekst op het scherm geprint.
+De sensornode kan via de UART, over USB, data naar de Raspberry Pi sturen. De sensor en routing table data wordt binair naar de RPi gestuurd. De debug data kan als ASCII worden verstuurd en wordt direct als tekst op het scherm geprint.
 
 De datapakketen worden in het volgende formaat verstuurd; Byte 0 geeft het type pakket aan; Byte 1 geeft aan hoe groot het pakket is; Vanaf byte 2 begint de data.
 
 \begin{center}
-Syntax pakket: [Type pakket, Pakket lengte, Data 0, Data 1, ...]
+Syntax pakket: [Type pakket, Pakketlengte, Data 0, Data 1, ...]
 \end{center}
 
 \begin{table}[!h]
@@ -129,7 +129,7 @@ Syntax pakket: [Type pakket, Pakket lengte, Data 0, Data 1, ...]
 \label{tab:datapakket_pi}
 \end{table}
 
-Om de verschillende typen datapakketten van elkaar te onderscheiden word met de eerste byte aangegeven welk type datapakket er verstuurd word, zie tabel \ref{tab:datapakket_pi}. Als een datapakket niet met begint met een geldig pakket ID dan word de data aangezien als debug data. Dit is gedaan zodat de debug data ook uit te lezen is met een seriele terminal.
+Om de verschillende typen datapakketten van elkaar te onderscheiden wordt met de eerste byte aangegeven welk type datapakket er verstuurd wordt, zie tabel \ref{tab:datapakket_pi}. Als een datapakket niet begint met een geldig pakket ID dan wordt de data aangezien als debug data. Dit is gedaan zodat de debug data ook uit te lezen is met een seriele terminal.
 
 \section{ISO groep}
 Om te zorgen dat de nodes van de verschillende groepen elkaars datapaketten kunnen interpreteren en doorsturen zijn er afspraken gemaakt tussen de 5 groepen. Elke groep leverde 1 afgevaardigde, de 5 afgevaardigden vormden de ISO groep. De afspraken die de ISO-groep gemaakt heeft zijn opgesteld in\cite{ISO}.
