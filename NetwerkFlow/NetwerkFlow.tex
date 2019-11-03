@@ -129,7 +129,7 @@ Syntax pakket: [Type pakket, Pakket lengte, Data 0, Data 1, ...]
 \label{tab:datapakket_pi}
 \end{table}
 
-Om de verschillende typen datapakketten van elkaar te onderscheiden word met de eerste byte aangegeven welk type datapakket er verstuurd word, zie tabel \ref{tab:datapakket_pi}. Als een datapakket niet met begint met een geldig pakket ID dan word de data aangezien als debug data. 
+Om de verschillende typen datapakketten van elkaar te onderscheiden word met de eerste byte aangegeven welk type datapakket er verstuurd word, zie tabel \ref{tab:datapakket_pi}. Als een datapakket niet met begint met een geldig pakket ID dan word de data aangezien als debug data. Dit is gedaan zodat de debug data ook uit te lezen is met een seriele terminal.
 
 \section{ISO groep}
 Om te zorgen dat de nodes van de verschillende groepen elkaars datapaketten kunnen interpreteren en doorsturen zijn er afspraken gemaakt tussen de 5 groepen. Elke groep leverde 1 afgevaardigde, de 5 afgevaardigden vormden de ISO groep. De afspraken die de ISO-groep gemaakt heeft zijn opgesteld in\cite{ISO}.
