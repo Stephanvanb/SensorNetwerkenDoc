@@ -42,7 +42,7 @@
 \linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
 
 \makeatletter
-\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
+\renewcommand{\refname}{Bibliografie}
 \renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
 
 \renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
@@ -71,10 +71,9 @@
 			Sensor Netwerken: groep 5\\
 			Studentnummer: 500757732}}} % Institution
 
-\date{20 September, 2019} % Date
+\date{3 november, 2019} % Date
 
 %----------------------------------------------------------------------------------------
-\bibliographystyle{IEEEtran}
 \begin{document}
 	\captionsetup[figure]{labelfont={bf},name={Fig},labelsep=period}
 	\captionsetup{justification=centering}
@@ -200,7 +199,39 @@
 	
 	\subsection{Globaal overzicht van de sensormodule}
 	\label{subsec::Globaal_Overzicht}
-	Zoals staat beschreven in paragraaf \ref{subsec::Sensor_keuze} is er gekozen om CO te meten met een elektrochemische sensor. Voor een optimaal gebruik van elektrochemische sensor moet de temperatuur bekend zijn, hiervoor is er een thermometer nodig. Ook zal er enige analoge signaalverwerking nodig zijn voordat om de CO sensor bruikbaar te maken. Aangezien meting uiteindelijk gedeeld moeten worden in een draadloos dynamisch sensornetwerk, dit gebeurt d.m.v. een microcontroller (de Xmega). Om deze rede moet het analoge signaal van de sensor worden omgezet naar het digitale domein d.m.v. een ADC.
+	Zoals staat beschreven in paragraaf \ref{subsec::Sensor_keuze} is er gekozen om CO te meten met een elektrochemische sensor. Voor een optimaal gebruik van elektrochemische sensor moet de temperatuur bekend zijn, hiervoor is er een thermometer nodig. Ook zal er enige analoge signaalverwerking nodig zijn voordat om de CO sensor bruikbaar te maken. Aangezien meting uiteindelijk gedeeld moeten worden in een draadloos dynamisch sensornetwerk, dit gebeurt d.m.v. een microcontroller (de Xmega). Om deze rede moet het analoge signaal van de sensor worden omgezet naar het digitale domein d.m.v. een ADC. Zie figuur \ref{fig:Dia_sensormodule} voor een visueel overzicht.
+	\newpage
+	\begin{figure}[h!]
+		\centering
+		%\hspace{-2cm} 
+		\includegraphics[width=1.1\linewidth]{afbeeldingen/Dia_Sensormodule.png}
+		\caption{Blokdiagram van het systeem van de sensormodule}
+		\label{fig:Dia_sensormodule}
+	\end{figure}
+
+	\subsection{Signaalverwerking} \label{subsec::signaalverwerking}
+	Bij elektrochemische sensoren die CO meten is het signaal wat correleert met de concentratie CO in de lucht een stroom. De sterkte van dit signaal zit in de ordegrootte van nano ampères en moet dus versterkt worden \cite{SGX Intro}\cite{SGX datasheet}, hiervoor wordt er een stroomversterker gebruikt. Voor de ADC van de Xmega microcontroller moet het signaal echter een spanning zijn. Hiervoor wordt er weerstand na de stroomversterker geplaatst, waarover de spanning gemeten wordt. Het signaal wat uit de elektrochemische sensor komt is een DC signaal is, om deze rede is het ook handig om een laagdoorlaatfilter voor de ADC te plaatsen. zie figuur \ref{fig:Dia_sigverwerking} voor een visueel overzicht van de signaalverwerking.
+	\newpage
+	\begin{figure}[h!]
+		\centering
+		\hspace*{-2cm} 
+		\includegraphics[width=1.4\linewidth]{afbeeldingen/Dia_sigverwerking.png}
+		\caption{Blokdiagram van de signaalverwerking binnen de sensormodule}
+		\label{fig:Dia_sigverwerking}
+	\end{figure}
+
+	\subsection{Thermometer} \label{subsec::Thermometer}
+	Zoals vermeld in paragraaf \ref{subsec::elektrochemische_sensoren} is er een thermometer nodig om te weten wat de invloed is van de temperatuur op de metingen. In figuur \ref{fig:Dia_sensormodule} is al te zien dat er voor een thermometer met een digitale output is gekozen, zodat de thermometer meteen met de Xmega microcontroller kan communiceren. Op basis van de data die uit de thermometer komt zullen de CO metingen gecorrigeerd worden in de software van de Xmega microcontroller.
+	\begin{figure}[h!]
+		\centering
+		\hspace*{-1.5cm} 
+		\includegraphics[width=1.2\linewidth]{afbeeldingen/Dia_thermometer.png}
+		\caption{Blokdiagram van de signaalverwerking binnen de sensormodule}
+		\label{fig:Dia_Thermometer}
+	\end{figure}
+
+	\section{Testplan}
+	Een veelgebruikte methode om gassensoren te testen, is het gebruikmaken van kalibratiegasflessen. Bij deze methode laat je het te meten gas (in dit geval CO) in een gesloten ruimte los vanuit een kalibratiegasfles. Vervolgens worden de metingen van de ontworpen sensormodule vergeleken met die van een andere CO meter waarvan de specificaties bekend zijn \cite{Hatech}. Op deze manier kan er geverifieerd worden of de ontworpen sensormodule binnen de specificaties van CO meter zit. Verder kan het energieverbruik van de sensormodule worden getest door gebruik te maken van de meetapparatuur die beschikbaar is op de HvA en het systeem te meten terwijl het in werking is.
 	%----------------------------------------------------------------------------------------
 	% APPENDIX
 	%----------------------------------------------------------------------------------------
@@ -255,7 +286,9 @@
 	Er is geen sensor op de markt beschikbaar om de concentraties $NO_2$ die we verwachten te meten. De beschikbare sensoren zijn niet gevoelig genoeg en verbruiken te veel energie. Daarom is er voor gekozen om af te stappen van het meten van $NO_2$ als indicator van de luchtkwaliteit binnen de HvA gebouwen. Als alternatief is gekozen voor het meten van $CO$ concentraties in de lucht. $CO$ is een giftig gas en kan vrijkomen bij onvolledige verbrandingen en is daarom belangrijk om dit gas tijdig te registreren.
 	%----------------------------------------------------------------------------------------
 	\newpage
+	
 	\begin{thebibliography}{9}
+		\bibliographystyle{IEEEtran}
 		\bibitem{Effecten Koolmonoxide}
 		Mariët Ticheler, 
 		2008 [Bekeken in september 2019],
@@ -334,6 +367,20 @@
 		Sensor Array System for Wearable Health and
 		Safety Monitoring",
 		Beschikbaar: \url{https://ieeexplore.ieee.org/document/6851860}
+		
+		\bibitem{SGX datasheet}
+		SGX Sensortech,
+		[Bekeken in oktober 2019],
+		[Datasheet],
+		"SGX-4CO Industrial Carbon Monoxide Sensor",
+		Beschikbaar: \url{https://www.sgxsensortech.com/content/uploads/2014/07/DS-0138-SGX-4CO-V2.pdf}
+
+		\bibitem{Hatech}
+		HATECH gasdetectietechniek,
+		[Bekeken in oktober 2019],
+		[Online],
+		"Onderhoud gasdetectoren",
+		Beschikbaar: \url{https://www.hatechgas.com/onderhoud/geen-kalibratie-nodig/}	
 		
 	\end{thebibliography}
 \end{document}
